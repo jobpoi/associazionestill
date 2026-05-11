@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Associazione Italiana Malattia di Still</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#C0392B',
+            salmon: '#E8867A',
+            rlight: '#F2B5A8',
+            rpale: '#FAD9D4',
+            anthracite: '#3D3D3D',
+            rgray: '#6B6B6B',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --red: #C0392B;
+      --red-dark: #a93226;
+      --salmon: #E8867A;
+      --light: #F2B5A8;
+      --pale: #FAD9D4;
+      --pale-light: #fdf0ee;
+      --dark: #3D3D3D;
+      --gray: #6B6B6B;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Calibri, 'Trebuchet MS', 'Gill Sans', sans-serif;
+      color: var(--dark);
+      background: #fff;
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4, blockquote {
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.018;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 148px;
+      transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    #nav.scrolled {
+      background: rgba(255,255,255,0.93);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(192,57,43,0.08), 0 4px 32px rgba(61,61,61,0.06);
+    }
+    #nav .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    #nav .nav-links a {
+      font-size: 14px;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.015em;
+      font-weight: 400;
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.2s ease;
+    }
+    #nav .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--red);
+      transition: width 0.25s ease;
+    }
+    #nav .nav-links a:hover { color: var(--red); }
+    #nav .nav-links a:hover::after { width: 100%; }
+    .btn-nav {
+      background: var(--red);
+      color: #fff !important;
+      padding: 9px 22px;
+      border-radius: 4px;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.02em;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+      box-shadow: 0 2px 10px rgba(192,57,43,0.22);
+    }
+    .btn-nav::after { display: none !important; }
+    .btn-nav:hover {
+      background: var(--red-dark) !important;
+      color: #fff !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(192,57,43,0.32) !important;
+    }
+    .btn-nav:active { transform: translateY(0) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 148px;
+      background: #fff;
+    }
+
+    /* ── HERO VISUAL (right side) ── */
+    #hero-visual {
+      position: relative;
+      width: 480px;
+      height: 480px;
+      flex-shrink: 0;
+    }
+
+    /* Orbit rings */
+    .orbit-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .ring-outer {
+      width: 460px; height: 460px;
+      margin: -230px 0 0 -230px;
+      border: 1.5px solid rgba(242,181,168,0.35);
+    }
+    .ring-mid {
+      width: 350px; height: 350px;
+      margin: -175px 0 0 -175px;
+      border: 1px dashed rgba(232,134,122,0.25);
+    }
+    .ring-inner {
+      width: 250px; height: 250px;
+      margin: -125px 0 0 -125px;
+      border: 1px solid rgba(250,217,212,0.5);
+    }
+
+    /* Orbit dot tracks */
+    .dot-track {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+    }
+    .dot-track.cw  { animation: orbit-cw  linear infinite; }
+    .dot-track.ccw { animation: orbit-ccw linear infinite; }
+
+    /* Dot shapes */
+    .dot-shape {
+      position: absolute;
+      border-radius: 55% 45% 60% 40% / 40% 60% 45% 55%;
+    }
+    .dot-shape.counter-cw  { animation: orbit-ccw linear infinite; }
+    .dot-shape.counter-ccw { animation: orbit-cw  linear infinite; }
+
+    /* Glow behind logo */
+    .logo-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 290px; height: 290px;
+      margin: -145px 0 0 -145px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(250,217,212,0.95) 0%, rgba(242,181,168,0.5) 45%, transparent 72%);
+      animation: pulse-glow 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* Logo circle — solo il marchio grafico, senza testo. */
+    .logo-circle-wrap {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 290px; height: 290px;
+      margin: -145px 0 0 -145px;
+      border-radius: 50%;
+      overflow: hidden;
+      animation: logo-spin 40s linear infinite;
+      /* Valori calcolati con canvas pixel-analysis:
+         Immagine 1024×1024. Mark center: x=511px(49.9%), y=441.5px(43.1%). Raggio:~231px.
+         W=590px → mark radius=133px (92% fill). Text a y=704 → dist.dal centro=152px>145px ✓ */
+      background-image: url('Logo_Still.jpeg');
+      background-size: 590px 590px;
+      background-position: -150px -109px;
+      background-repeat: no-repeat;
+      box-shadow:
+        0 4px 24px rgba(192,57,43,0.12),
+        0 12px 48px rgba(192,57,43,0.08),
+        0 0 0 3px rgba(242,181,168,0.4);
+    }
+    /* Background-image con valori pixel assoluti per precisione totale.
+       Immagine 440px su container 290px (raggio 145px):
+       - background-position X: -(440-290)/2 = -75px (centra orizzontalmente)
+       - background-position Y: 145 - 29%×440 = 145-127.6 = +17px (centra il mark)
+       - Testo a ~63%×440=277px → in container: 277+17=294px, dist. dal centro=149px > 145px ✓
+         Il testo ruota sempre FUORI dal cerchio a qualsiasi angolo. */
+
+    /* Keyframes */
+    @keyframes orbit-cw  { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
+    @keyframes orbit-ccw { from { transform: rotate(0deg); }   to { transform: rotate(-360deg); } }
+    @keyframes logo-spin { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
+    @keyframes pulse-glow {
+      0%,100% { transform: scale(1);    opacity: 0.8; }
+      50%      { transform: scale(1.1); opacity: 1;   }
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33%       { transform: translateY(-14px) rotate(2deg); }
+      66%       { transform: translateY(7px) rotate(-1.5deg); }
+    }
+    .float-slow { animation: float-slow 9s ease-in-out infinite; }
+
+    /* ── FADE UP ANIMATION ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: 0.1s; }
+    .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; }
+    .fade-up.d4 { transition-delay: 0.4s; }
+    .fade-up.d5 { transition-delay: 0.5s; }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: #fff;
+      padding: 15px 34px;
+      border-radius: 4px;
+      font-family: Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 12px rgba(192,57,43,0.25), 0 1px 4px rgba(192,57,43,0.15);
+    }
+    .btn-primary:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 22px rgba(192,57,43,0.35), 0 2px 8px rgba(192,57,43,0.2);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--red);
+      padding: 14px 33px;
+      border-radius: 4px;
+      border: 1.5px solid var(--red);
+      font-family: Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-outline:hover {
+      background: var(--pale);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(192,57,43,0.1);
+    }
+    .btn-outline:active { transform: translateY(0); }
+
+    /* ── SECTIONS ── */
+    section { position: relative; }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .section-pale {
+      background: linear-gradient(160deg, var(--pale-light) 0%, #fff6f5 40%, var(--pale) 100%);
+    }
+
+    /* ── CARDS ── */
+    .pillar-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 36px;
+      box-shadow:
+        0 2px 6px rgba(192,57,43,0.04),
+        0 8px 28px rgba(192,57,43,0.07),
+        0 24px 60px rgba(61,61,61,0.05);
+      border: 1px solid rgba(242,181,168,0.35);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .pillar-card:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        0 4px 16px rgba(192,57,43,0.08),
+        0 16px 48px rgba(192,57,43,0.1),
+        0 36px 80px rgba(61,61,61,0.07);
+    }
+
+    .service-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 36px 32px;
+      box-shadow: 0 2px 8px rgba(192,57,43,0.04), 0 8px 32px rgba(192,57,43,0.07);
+      border: 1px solid rgba(250,217,212,0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(192,57,43,0.1), 0 20px 56px rgba(192,57,43,0.09);
+    }
+
+    .news-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 8px 28px rgba(61,61,61,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .news-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(192,57,43,0.1), 0 20px 56px rgba(61,61,61,0.08);
+    }
+
+    /* ── STATS ── */
+    .stat-num {
+      font-family: Georgia, serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 700;
+      color: var(--red);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── ICON CIRCLE ── */
+    .icon-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: background 0.2s ease;
+    }
+    .pillar-card:hover .icon-circle,
+    .service-card:hover .icon-circle {
+      background: var(--light);
+    }
+
+    /* ── DIVIDER WAVE ── */
+    .wave-top, .wave-bottom {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    /* ── QUOTE ── */
+    .quote-mark {
+      font-family: Georgia, serif;
+      font-size: 7rem;
+      line-height: 0.6;
+      color: var(--light);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.65);
+    }
+    footer h4 {
+      color: #fff;
+      font-family: Georgia, serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+    footer a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 2;
+      display: block;
+      transition: color 0.2s ease;
+    }
+    footer a:hover { color: var(--light); }
+    .footer-social {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .footer-social:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    /* ── TAG ── */
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 3px;
+      background: var(--pale);
+      color: var(--red);
+    }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      font-family: Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--red);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    /* Centered eyebrow (no side bar) */
+    .eyebrow-center {
+      font-family: Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      text-align: center;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .eyebrow-center::before,
+    .eyebrow-center::after {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 2px;
+      background: var(--red);
+      border-radius: 1px;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    /* ── LINK ARROW ── */
+    .link-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--red);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(192,57,43,0.25);
+      padding-bottom: 1px;
+      transition: gap 0.2s ease, border-color 0.2s ease;
+    }
+    .link-arrow:hover {
+      gap: 10px;
+      border-color: var(--red);
+    }
+
+    /* ── HERO STAT PILL ── */
+    .hero-stat {
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px 28px;
+      box-shadow: 0 2px 12px rgba(192,57,43,0.08), 0 8px 32px rgba(61,61,61,0.06);
+      border: 1px solid rgba(242,181,168,0.3);
+    }
+
+    /* ── Hero visual wrapper ── */
+    .hero-visual-wrapper {
+      width: 480px;
+      height: 480px;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* ── iOS/Safari: GPU acceleration for animations ── */
+    .logo-circle-wrap, .dot-track, .dot-shape, .logo-glow {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    .logo-circle-wrap { -webkit-animation: logo-spin 40s linear infinite; }
+    .dot-track.cw     { -webkit-animation: orbit-cw  linear infinite; }
+    .dot-track.ccw    { -webkit-animation: orbit-ccw linear infinite; }
+    .dot-shape.counter-cw  { -webkit-animation: orbit-ccw linear infinite; }
+    .dot-shape.counter-ccw { -webkit-animation: orbit-cw  linear infinite; }
+    .logo-glow { -webkit-animation: pulse-glow 4s ease-in-out infinite; }
+
+    @-webkit-keyframes orbit-cw  { from { -webkit-transform: rotate(0deg); } to { -webkit-transform: rotate(360deg); } }
+    @-webkit-keyframes orbit-ccw { from { -webkit-transform: rotate(0deg); } to { -webkit-transform: rotate(-360deg); } }
+    @-webkit-keyframes logo-spin { from { -webkit-transform: rotate(0deg); } to { -webkit-transform: rotate(360deg); } }
+    @-webkit-keyframes pulse-glow {
+      0%,100% { -webkit-transform: scale(1);    opacity: 0.8; }
+      50%      { -webkit-transform: scale(1.1); opacity: 1;   }
+    }
+
+    /* ── Hamburger (hidden on desktop) ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 201;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--dark);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Mobile nav overlay ── */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 80px; left: 0; right: 0;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 16px 20px 24px;
+      box-shadow: 0 8px 32px rgba(61,61,61,0.1);
+      z-index: 198;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 13px 16px;
+      font-size: 1rem;
+      color: var(--dark);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-family: Calibri, 'Trebuchet MS', sans-serif;
+    }
+    .mobile-nav a:hover { background: var(--pale-light); color: var(--red); }
+    .mobile-nav .btn-nav-m {
+      margin-top: 8px;
+      background: var(--red);
+      color: #fff;
+      text-align: center;
+      font-weight: 600;
+    }
+    .mobile-nav .btn-nav-m:hover { background: var(--red-dark); color: #fff; }
+
+    /* ══ RESPONSIVE ══════════════════════════════════════════════════════ */
+
+    /* ── Tablet ≤ 1100px ── */
+    @media (max-width: 1100px) {
+      .hero-grid { grid-template-columns: 1fr 380px !important; gap: 36px !important; }
+      .hero-visual-wrapper { width: 380px; height: 380px; }
+      #hero-visual { transform: scale(0.792); transform-origin: top left; }
+      .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+    }
+
+    /* ── ≤ 900px — tablet portrait / phablet ── */
+    @media (max-width: 900px) {
+      #nav { height: 80px !important; }
+      #hero { padding-top: 80px !important; }
+      #nav .nav-inner { padding: 0 24px !important; }
+      #nav img { height: 68px !important; }
+      .nav-links { display: none !important; }
+      .nav-hamburger { display: flex; }
+
+      .hero-grid {
+        grid-template-columns: 1fr !important;
+        min-height: auto !important;
+        gap: 0 !important;
+        padding-bottom: 60px !important;
+      }
+      .hero-visual-wrapper {
+        width: 340px;
+        height: 340px;
+        margin: 32px auto 0;
+      }
+      #hero-visual { transform: scale(0.708); transform-origin: top left; }
+
+      .malattia-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+      .missione-cards { grid-template-columns: 1fr !important; gap: 20px !important; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .supporto-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
+      .supporto-sticky { position: static !important; top: auto !important; }
+      .services-grid { grid-template-columns: 1fr 1fr !important; }
+      .news-grid { grid-template-columns: 1fr 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+      .section-inner { padding: 0 24px !important; }
+      #malattia, #missione, #supporto, #notizie, #contatti { padding: 72px 0 !important; }
+    }
+
+    /* ── Mobile ≤ 600px ── */
+    @media (max-width: 600px) {
+      #nav img { height: 60px !important; }
+      .hero-visual-wrapper { width: 290px; height: 290px; margin-top: 24px; }
+      #hero-visual { transform: scale(0.604); transform-origin: top left; }
+      .hero-stats { flex-wrap: wrap !important; }
+      .hero-stat { flex: 1 1 auto !important; min-width: 130px; padding: 14px 18px !important; }
+      .services-grid { grid-template-columns: 1fr !important; }
+      .news-grid { grid-template-columns: 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr !important; }
+      .section-inner { padding: 0 16px !important; }
+      #malattia, #missione, #supporto, #notizie, #contatti { padding: 56px 0 !important; }
+    }
+
+    /* ── Piccolo mobile ≤ 380px ── */
+    @media (max-width: 380px) {
+      .hero-visual-wrapper { width: 240px; height: 240px; }
+      #hero-visual { transform: scale(0.5); transform-origin: top left; }
+      .hero-stat { flex: 1 1 100% !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════ NAV ════════════════════════════════ -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" style="display:flex;align-items:center;text-decoration:none;">
+        <img src="Logo_Still.jpeg" alt="Associazione Italiana Malattia di Still" style="height:132px;width:auto;object-fit:contain;">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#malattia">La Malattia</a></li>
+        <li><a href="#missione">Missione</a></li>
+        <li><a href="#supporto">Supporto</a></li>
+        <li><a href="#notizie">Notizie</a></li>
+        <li><a href="#contatti" class="btn-nav">Dona ora</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav overlay -->
+  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="#malattia" class="mobile-nav-link">La Malattia</a>
+    <a href="#missione" class="mobile-nav-link">Missione</a>
+    <a href="#supporto" class="mobile-nav-link">Supporto</a>
+    <a href="#notizie" class="mobile-nav-link">Notizie</a>
+    <a href="#contatti" class="btn-nav-m mobile-nav-link">Dona ora</a>
+  </nav>
+
+  <!-- ════════════════════════════════ HERO ════════════════════════════════ -->
+  <section id="hero">
+    <div class="section-inner hero-grid" style="position:relative;z-index:10;width:100%;display:grid;grid-template-columns:1fr 480px;align-items:center;min-height:calc(100vh - 148px);gap:60px;padding-top:40px;padding-bottom:60px;">
+
+      <!-- ── Left: text ── -->
+      <div>
+        <div class="eyebrow fade-up">Associazione Italiana · Malattia di Still</div>
+
+        <h1 class="fade-up d1" style="font-size:clamp(2.2rem,3.8vw,3.4rem);font-weight:700;line-height:1.18;letter-spacing:-0.025em;color:var(--dark);margin-bottom:24px;">
+          Una voce per chi vive<br>
+          <span style="color:var(--red);">con la Malattia di Still</span>
+        </h1>
+
+        <p class="fade-up d2" style="font-size:1.1rem;line-height:1.8;color:var(--gray);max-width:500px;margin-bottom:40px;">
+          Supportiamo pazienti, famiglie e la ricerca scientifica per migliorare
+          la qualità della vita di chi convive ogni giorno con questa patologia rara.
+        </p>
+
+        <div class="fade-up d3" style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:64px;">
+          <a href="#missione" class="btn-primary">
+            Scopri la nostra storia
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#contatti" class="btn-outline">Dona ora</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="fade-up d4 hero-stats" style="display:flex;flex-wrap:nowrap;gap:14px;">
+          <div class="hero-stat">
+            <div class="stat-num" style="font-size:1.8rem;">1 su 100.000</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:4px;">persone colpite in Italia</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-num" style="font-size:1.8rem;">+500</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:4px;">pazienti nella nostra comunità</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-num" style="font-size:1.8rem;">12</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:4px;">centri medici partner</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Right: animated logo composition ── -->
+      <div class="hero-visual-wrapper">
+      <div id="hero-visual">
+
+        <!-- Orbit rings -->
+        <div class="orbit-ring ring-outer"></div>
+        <div class="orbit-ring ring-mid"></div>
+        <div class="orbit-ring ring-inner"></div>
+
+        <!-- Outer ring dots (CW, 5 dots evenly spaced → delay = -dur * i/5) -->
+        <!-- dur = 30s → delays: 0, -6, -12, -18, -24 -->
+        <div class="dot-track cw" style="animation-duration:30s;animation-delay:0s;">
+          <div class="dot-shape counter-cw" style="width:18px;height:11px;background:#E8867A;opacity:0.85;top:-230px;left:-9px;animation-duration:30s;animation-delay:0s;border-radius:55% 45% 60% 40%/40% 60% 45% 55%;"></div>
+        </div>
+        <div class="dot-track cw" style="animation-duration:30s;animation-delay:-6s;">
+          <div class="dot-shape counter-cw" style="width:14px;height:9px;background:#C0392B;opacity:0.6;top:-230px;left:-7px;animation-duration:30s;animation-delay:-6s;border-radius:60% 40% 55% 45%/45% 55% 40% 60%;"></div>
+        </div>
+        <div class="dot-track cw" style="animation-duration:30s;animation-delay:-12s;">
+          <div class="dot-shape counter-cw" style="width:22px;height:14px;background:#F2B5A8;opacity:0.9;top:-230px;left:-11px;animation-duration:30s;animation-delay:-12s;border-radius:50% 50% 60% 40%/40% 60% 50% 50%;"></div>
+        </div>
+        <div class="dot-track cw" style="animation-duration:30s;animation-delay:-18s;">
+          <div class="dot-shape counter-cw" style="width:12px;height:8px;background:#C0392B;opacity:0.45;top:-230px;left:-6px;animation-duration:30s;animation-delay:-18s;"></div>
+        </div>
+        <div class="dot-track cw" style="animation-duration:30s;animation-delay:-24s;">
+          <div class="dot-shape counter-cw" style="width:16px;height:10px;background:#E8867A;opacity:0.7;top:-230px;left:-8px;animation-duration:30s;animation-delay:-24s;border-radius:45% 55% 60% 40%/55% 45% 40% 60%;"></div>
+        </div>
+
+        <!-- Mid ring dots (CCW, 4 dots) -->
+        <!-- dur = 22s → delays: 0, -5.5, -11, -16.5 -->
+        <div class="dot-track ccw" style="animation-duration:22s;animation-delay:0s;">
+          <div class="dot-shape counter-ccw" style="width:16px;height:10px;background:#FAD9D4;opacity:0.9;top:-175px;left:-8px;animation-duration:22s;animation-delay:0s;border-radius:60% 40% 55% 45%/45% 55% 40% 60%;border:1.5px solid rgba(232,134,122,0.5);background:rgba(250,217,212,0.7);"></div>
+        </div>
+        <div class="dot-track ccw" style="animation-duration:22s;animation-delay:-5.5s;">
+          <div class="dot-shape counter-ccw" style="width:20px;height:13px;background:#E8867A;opacity:0.65;top:-175px;left:-10px;animation-duration:22s;animation-delay:-5.5s;"></div>
+        </div>
+        <div class="dot-track ccw" style="animation-duration:22s;animation-delay:-11s;">
+          <div class="dot-shape counter-ccw" style="width:12px;height:8px;background:#C0392B;opacity:0.4;top:-175px;left:-6px;animation-duration:22s;animation-delay:-11s;"></div>
+        </div>
+        <div class="dot-track ccw" style="animation-duration:22s;animation-delay:-16.5s;">
+          <div class="dot-shape counter-ccw" style="width:18px;height:11px;background:#F2B5A8;opacity:0.8;top:-175px;left:-9px;animation-duration:22s;animation-delay:-16.5s;"></div>
+        </div>
+
+        <!-- Inner ring dots (CW, 3 dots) -->
+        <!-- dur = 16s → delays: 0, -5.3, -10.6 -->
+        <div class="dot-track cw" style="animation-duration:16s;animation-delay:0s;">
+          <div class="dot-shape counter-cw" style="width:10px;height:7px;background:#C0392B;opacity:0.55;top:-125px;left:-5px;animation-duration:16s;animation-delay:0s;"></div>
+        </div>
+        <div class="dot-track cw" style="animation-duration:16s;animation-delay:-5.3s;">
+          <div class="dot-shape counter-cw" style="width:14px;height:9px;background:#E8867A;opacity:0.7;top:-125px;left:-7px;animation-duration:16s;animation-delay:-5.3s;"></div>
+        </div>
+        <div class="dot-track cw" style="animation-duration:16s;animation-delay:-10.6s;">
+          <div class="dot-shape counter-cw" style="width:8px;height:6px;background:#FAD9D4;opacity:0.8;top:-125px;left:-4px;animation-duration:16s;animation-delay:-10.6s;border:1px solid rgba(192,57,43,0.3);"></div>
+        </div>
+
+        <!-- Glow -->
+        <div class="logo-glow"></div>
+
+        <!-- Rotating logo circle (solo il marchio, no testo) -->
+        <div class="logo-circle-wrap"></div>
+
+      </div><!-- end #hero-visual -->
+      </div><!-- end .hero-visual-wrapper -->
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ MALATTIA ════════════════════════════ -->
+  <section id="malattia" style="padding:100px 0;background:#fff;">
+    <div class="section-inner">
+      <div class="malattia-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+
+        <!-- Image column -->
+        <div class="fade-up" style="position:relative;">
+          <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(192,57,43,0.1),0 24px 80px rgba(61,61,61,0.1);">
+            <img src="https://placehold.co/640x480/FAD9D4/C0392B?text=Malattia+di+Still" alt="Malattia di Still" style="width:100%;height:auto;display:block;">
+            <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(61,61,61,0.15));border-radius:20px;pointer-events:none;"></div>
+          </div>
+          <!-- Accent shape -->
+          <div style="position:absolute;bottom:-24px;left:-24px;width:120px;height:120px;border-radius:50% 40% 55% 45% / 45% 55% 40% 60%;background:var(--pale);z-index:-1;opacity:0.8;"></div>
+          <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:60% 40% 55% 45% / 50% 40% 60% 50%;background:var(--light);z-index:-1;opacity:0.5;"></div>
+        </div>
+
+        <!-- Text column -->
+        <div>
+          <div class="eyebrow fade-up">Conoscere la malattia</div>
+          <h2 class="fade-up d1" style="font-size:clamp(1.8rem,2.8vw,2.5rem);font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:var(--dark);margin-bottom:20px;">
+            Cos'è la Malattia<br><span style="color:var(--red);">di Still?</span>
+          </h2>
+          <p class="fade-up d2" style="font-size:1.05rem;line-height:1.8;color:var(--gray);margin-bottom:20px;">
+            La Malattia di Still è una forma rara di artrite infiammatoria sistemica che può colpire sia adulti (forma AOSD) che bambini (JIA sistemica). Si manifesta con febbre quotidiana alta, eruzioni cutanee caratteristiche e infiammazione articolare diffusa.
+          </p>
+          <p class="fade-up d2" style="font-size:1.05rem;line-height:1.8;color:var(--gray);margin-bottom:32px;">
+            A causa della sua rarità e della presentazione clinica variabile, la diagnosi può richiedere anche <strong style="color:var(--dark);">anni di attesa</strong>, lasciando i pazienti senza risposte e senza una rete di supporto adeguata.
+          </p>
+          <div class="fade-up d3" style="display:flex;gap:32px;margin-bottom:36px;padding:24px 0;border-top:1px solid rgba(242,181,168,0.5);border-bottom:1px solid rgba(242,181,168,0.5);">
+            <div>
+              <div class="stat-num" style="font-size:1.8rem;">2–7</div>
+              <div style="font-size:13px;color:var(--gray);margin-top:4px;">anni per una diagnosi</div>
+            </div>
+            <div style="width:1px;background:rgba(242,181,168,0.6);flex-shrink:0;"></div>
+            <div>
+              <div class="stat-num" style="font-size:1.8rem;">~5.000</div>
+              <div style="font-size:13px;color:var(--gray);margin-top:4px;">casi stimati in Italia</div>
+            </div>
+            <div style="width:1px;background:rgba(242,181,168,0.6);flex-shrink:0;"></div>
+            <div>
+              <div class="stat-num" style="font-size:1.8rem;">30–40</div>
+              <div style="font-size:13px;color:var(--gray);margin-top:4px;">età media di diagnosi</div>
+            </div>
+          </div>
+          <a href="#" class="link-arrow fade-up d4">
+            Approfondisci la patologia
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ MISSIONE ════════════════════════════ -->
+  <section id="missione" style="padding:100px 0;" class="section-pale">
+    <div class="section-inner">
+
+      <div style="text-align:center;max-width:600px;margin:0 auto 64px;">
+        <div class="eyebrow-center fade-up">Chi siamo</div>
+        <h2 class="fade-up d1" style="font-size:clamp(1.8rem,2.8vw,2.5rem);font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:var(--dark);margin-bottom:16px;">
+          I valori che guidano<br><span style="color:var(--red);">la nostra missione</span>
+        </h2>
+        <p class="fade-up d2" style="font-size:1.05rem;line-height:1.75;color:var(--gray);">
+          Ogni elemento del nostro lavoro nasce dalla volontà di mettere il paziente al centro, garantendo vicinanza umana, informazione scientifica e comunità solidale.
+        </p>
+      </div>
+
+      <div class="missione-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+
+        <div class="pillar-card fade-up d1">
+          <div class="icon-circle">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M13 22C13 22 4 17 4 10.5C4 7.46 6.46 5 9.5 5C11.06 5 12.45 5.65 13 6.85C13.55 5.65 14.94 5 16.5 5C19.54 5 22 7.46 22 10.5C22 17 13 22 13 22Z" stroke="#C0392B" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 style="font-size:1.2rem;font-weight:700;color:var(--dark);margin-bottom:12px;letter-spacing:-0.01em;">Vicinanza e Cura</h3>
+          <p style="font-size:0.95rem;line-height:1.75;color:var(--gray);">
+            Offriamo supporto emotivo e pratico a pazienti e famiglie, costruendo una rete di solidarietà che accompagna nelle fasi più difficili del percorso di cura.
+          </p>
+        </div>
+
+        <div class="pillar-card fade-up d2">
+          <div class="icon-circle">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <circle cx="13" cy="13" r="8" stroke="#C0392B" stroke-width="1.6"/>
+              <path d="M13 9v5l3 2" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M7 4L4 2M19 4l3-2M13 3V1" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 style="font-size:1.2rem;font-weight:700;color:var(--dark);margin-bottom:12px;letter-spacing:-0.01em;">Ricerca e Conoscenza</h3>
+          <p style="font-size:0.95rem;line-height:1.75;color:var(--gray);">
+            Collaboriamo con centri medici specializzati per promuovere la ricerca scientifica e diffondere informazioni accurate e aggiornate sulla patologia.
+          </p>
+        </div>
+
+        <div class="pillar-card fade-up d3">
+          <div class="icon-circle">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <circle cx="10" cy="9" r="3" stroke="#C0392B" stroke-width="1.6"/>
+              <circle cx="18" cy="11" r="2.5" stroke="#C0392B" stroke-width="1.6"/>
+              <path d="M5 20c0-3.31 2.24-5 5-5s5 1.69 5 5" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M18 18c1.38 0 3 .8 3 2" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 style="font-size:1.2rem;font-weight:700;color:var(--dark);margin-bottom:12px;letter-spacing:-0.01em;">Comunità e Speranza</h3>
+          <p style="font-size:0.95rem;line-height:1.75;color:var(--gray);">
+            Creiamo spazi sicuri di confronto e condivisione dove chi vive con la Malattia di Still può trovare comprensione, risorse e la certezza di non essere solo.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ STATISTICHE ════════════════════════════ -->
+  <section style="padding:80px 0;background:#fff;border-top:1px solid rgba(242,181,168,0.25);border-bottom:1px solid rgba(242,181,168,0.25);">
+    <div class="section-inner">
+      <div class="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center;">
+        <div class="fade-up d1">
+          <div class="stat-num">+500</div>
+          <div style="font-size:14px;color:var(--gray);margin-top:8px;line-height:1.5;">Pazienti nella<br>nostra comunità</div>
+        </div>
+        <div class="fade-up d2">
+          <div class="stat-num">12</div>
+          <div style="font-size:14px;color:var(--gray);margin-top:8px;line-height:1.5;">Centri medici<br>partner in Italia</div>
+        </div>
+        <div class="fade-up d3">
+          <div class="stat-num">8</div>
+          <div style="font-size:14px;color:var(--gray);margin-top:8px;line-height:1.5;">Anni di attività<br>dell'associazione</div>
+        </div>
+        <div class="fade-up d4">
+          <div class="stat-num">+200</div>
+          <div style="font-size:14px;color:var(--gray);margin-top:8px;line-height:1.5;">Famiglie<br>supportate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ SUPPORTO ════════════════════════════ -->
+  <section id="supporto" style="padding:100px 0;background:#fff;">
+    <div class="section-inner">
+
+      <div class="supporto-layout" style="display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;">
+        <div class="supporto-sticky" style="position:sticky;top:100px;">
+          <div class="eyebrow fade-up">I nostri servizi</div>
+          <h2 class="fade-up d1" style="font-size:clamp(1.8rem,2.5vw,2.3rem);font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:var(--dark);margin-bottom:16px;">
+            Come <span style="color:var(--red);">possiamo<br>aiutarti</span>
+          </h2>
+          <p class="fade-up d2" style="font-size:1rem;line-height:1.75;color:var(--gray);margin-bottom:28px;">
+            Offriamo una gamma completa di risorse e servizi pensati per accompagnare i pazienti e le loro famiglie in ogni momento del percorso.
+          </p>
+          <a href="#" class="btn-outline fade-up d3" style="display:inline-flex;">Tutti i servizi</a>
+        </div>
+
+        <div class="services-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+
+          <div class="service-card fade-up d1">
+            <div class="icon-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#C0392B" stroke-width="1.6"/>
+                <path d="M12 8v4l2.5 2.5" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:10px;">Supporto Psicologico</h3>
+            <p style="font-size:0.9rem;line-height:1.75;color:var(--gray);margin-bottom:16px;">
+              Ascolto e sostegno per affrontare le sfide emotive legate alla diagnosi e alla convivenza quotidiana con la malattia.
+            </p>
+            <a href="#" class="link-arrow">Richiedi supporto <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+
+          <div class="service-card fade-up d2">
+            <div class="icon-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 11l3 3L22 4" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:10px;">Informazione Medica</h3>
+            <p style="font-size:0.9rem;line-height:1.75;color:var(--gray);margin-bottom:16px;">
+              Schede informative aggiornate, guide pratiche e consulenze con specialisti reumatologi di riferimento.
+            </p>
+            <a href="#" class="link-arrow">Accedi alle risorse <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+
+          <div class="service-card fade-up d3">
+            <div class="icon-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+                <circle cx="9" cy="7" r="4" stroke="#C0392B" stroke-width="1.6"/>
+                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:10px;">Comunità Online</h3>
+            <p style="font-size:0.9rem;line-height:1.75;color:var(--gray);margin-bottom:16px;">
+              Forum, gruppi di discussione e incontri virtuali per condividere esperienze con chi vive la stessa situazione.
+            </p>
+            <a href="#" class="link-arrow">Unisciti alla comunità <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+
+          <div class="service-card fade-up d4">
+            <div class="icon-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#C0392B" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M9 22V12h6v10" stroke="#C0392B" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:10px;">Supporto alle Famiglie</h3>
+            <p style="font-size:0.9rem;line-height:1.75;color:var(--gray);margin-bottom:16px;">
+              Risorse dedicate, orientamento e gruppi di confronto per familiari e caregiver che affiancano i pazienti.
+            </p>
+            <a href="#" class="link-arrow">Scopri il programma <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ TESTIMONIANZA ════════════════════════════ -->
+  <section style="padding:100px 0;" class="section-pale">
+    <div class="section-inner">
+      <div style="max-width:760px;margin:0 auto;text-align:center;">
+        <span class="quote-mark fade-up">"</span>
+        <blockquote class="fade-up d1" style="font-size:clamp(1.2rem,2vw,1.6rem);font-weight:400;font-style:italic;line-height:1.7;color:var(--dark);margin-bottom:32px;">
+          Quando ho ricevuto la diagnosi, mi sono sentita sola e incompresa.
+          L'Associazione mi ha dato qualcosa di prezioso: una comunità, parole di conforto,
+          e la certezza di non essere l'unica a lottare ogni giorno.
+        </blockquote>
+        <div class="fade-up d2" style="display:flex;align-items:center;justify-content:center;gap:16px;">
+          <img src="https://placehold.co/48x48/F2B5A8/C0392B?text=M" alt="Maria" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">
+          <div style="text-align:left;">
+            <div style="font-weight:700;font-size:15px;color:var(--dark);">Maria R.</div>
+            <div style="font-size:13px;color:var(--gray);">Paziente, 34 anni · Milano</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ NOTIZIE ════════════════════════════ -->
+  <section id="notizie" style="padding:100px 0;background:#fff;">
+    <div class="section-inner">
+
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:56px;">
+        <div>
+          <div class="eyebrow fade-up" style="margin-bottom:12px;">Aggiornamenti</div>
+          <h2 class="fade-up d1" style="font-size:clamp(1.8rem,2.5vw,2.3rem);font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:var(--dark);">
+            Ultime <span style="color:var(--red);">notizie</span>
+          </h2>
+        </div>
+        <a href="#" class="link-arrow fade-up d2" style="flex-shrink:0;">
+          Vedi tutte
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="news-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+
+        <article class="news-card fade-up d1">
+          <div style="overflow:hidden;">
+            <img src="https://placehold.co/560x300/fdf0ee/E8867A?text=Ricerca+Clinica" alt="Studio clinico" style="width:100%;height:200px;object-fit:cover;transition:transform 0.5s ease;">
+          </div>
+          <div style="padding:28px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <span class="tag">Ricerca</span>
+              <span style="font-size:12px;color:var(--gray);">15 marzo 2026</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;line-height:1.4;color:var(--dark);margin-bottom:10px;">
+              Nuovo studio clinico multicentrico sulla Malattia di Still adulta
+            </h3>
+            <p style="font-size:0.875rem;line-height:1.7;color:var(--gray);margin-bottom:16px;">
+              Un importante studio italiano analizza l'efficacia dei nuovi approcci terapeutici per la forma adulta della malattia.
+            </p>
+            <a href="#" class="link-arrow" style="font-size:13px;">Leggi l'articolo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </article>
+
+        <article class="news-card fade-up d2">
+          <div style="overflow:hidden;">
+            <img src="https://placehold.co/560x300/fdf0ee/E8867A?text=Webinar" alt="Webinar" style="width:100%;height:200px;object-fit:cover;transition:transform 0.5s ease;">
+          </div>
+          <div style="padding:28px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <span class="tag">Evento</span>
+              <span style="font-size:12px;color:var(--gray);">10 marzo 2026</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;line-height:1.4;color:var(--dark);margin-bottom:10px;">
+              Webinar: Vivere con una malattia rara — esperienze a confronto
+            </h3>
+            <p style="font-size:0.875rem;line-height:1.7;color:var(--gray);margin-bottom:16px;">
+              Un incontro online per condividere esperienze, strategie e risorse tra pazienti e specialisti del settore.
+            </p>
+            <a href="#" class="link-arrow" style="font-size:13px;">Registrati al webinar <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </article>
+
+        <article class="news-card fade-up d3">
+          <div style="overflow:hidden;">
+            <img src="https://placehold.co/560x300/fdf0ee/E8867A?text=Giornata+Malattie+Rare" alt="Giornata malattie rare" style="width:100%;height:200px;object-fit:cover;transition:transform 0.5s ease;">
+          </div>
+          <div style="padding:28px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <span class="tag">Iniziativa</span>
+              <span style="font-size:12px;color:var(--gray);">28 febbraio 2026</span>
+            </div>
+            <h3 style="font-size:1.1rem;font-weight:700;line-height:1.4;color:var(--dark);margin-bottom:10px;">
+              Giornata Mondiale delle Malattie Rare 2026 — la nostra partecipazione
+            </h3>
+            <p style="font-size:0.875rem;line-height:1.7;color:var(--gray);margin-bottom:16px;">
+              Come l'associazione ha partecipato alle iniziative della Giornata Mondiale, sensibilizzando il pubblico sulla Still.
+            </p>
+            <a href="#" class="link-arrow" style="font-size:13px;">Leggi il resoconto <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ CTA / DONA ════════════════════════════ -->
+  <section id="contatti" style="padding:100px 0;position:relative;overflow:hidden;" class="section-pale">
+    <!-- Decorative blobs -->
+    <div style="position:absolute;left:-120px;top:-80px;width:400px;height:400px;border-radius:60% 40% 55% 45% / 45% 55% 40% 60%;background:rgba(192,57,43,0.06);pointer-events:none;"></div>
+    <div style="position:absolute;right:-100px;bottom:-60px;width:350px;height:350px;border-radius:50% 40% 60% 45% / 55% 45% 50% 60%;background:rgba(232,134,122,0.1);pointer-events:none;"></div>
+
+    <div class="section-inner" style="position:relative;z-index:2;">
+      <div style="max-width:680px;margin:0 auto;text-align:center;">
+
+        <img src="Logo_Still.jpeg" alt="Logo" class="fade-up" style="height:72px;width:auto;margin:0 auto 32px;display:block;">
+
+        <h2 class="fade-up d1" style="font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;line-height:1.2;letter-spacing:-0.02em;color:var(--dark);margin-bottom:20px;">
+          Insieme possiamo<br><span style="color:var(--red);">fare la differenza</span>
+        </h2>
+
+        <p class="fade-up d2" style="font-size:1.05rem;line-height:1.75;color:var(--gray);margin-bottom:40px;">
+          Il tuo contributo ci permette di supportare nuovi pazienti, finanziare la ricerca e ampliare i servizi della nostra comunità. Ogni donazione, grande o piccola, fa la differenza nella vita di una persona con la Malattia di Still.
+        </p>
+
+        <div class="fade-up d3" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:40px;">
+          <a href="#" class="btn-primary" style="font-size:16px;padding:16px 40px;">
+            Dona ora
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 15C9 15 2 10.5 2 6C2 3.79 3.79 2 6 2C7.46 2 8.73 2.75 9 3.66C9.27 2.75 10.54 2 12 2C14.21 2 16 3.79 16 6C16 10.5 9 15 9 15Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" class="btn-outline" style="font-size:16px;padding:15px 39px;">Diventa socio</a>
+        </div>
+
+        <p class="fade-up d4" style="font-size:13px;color:var(--gray);line-height:1.6;">
+          L'Associazione Italiana Malattia di Still è un'organizzazione no-profit. Tutte le donazioni sono deducibili fiscalmente.<br>
+          <strong style="color:var(--dark);">IBAN:</strong> IT00 X000 0000 0000 0000 0000 000 · <strong style="color:var(--dark);">CF:</strong> 00000000000
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ FOOTER ════════════════════════════ -->
+  <footer style="padding:64px 0 0;">
+    <div class="section-inner">
+      <div class="footer-grid" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,0.08);">
+
+        <!-- Brand column -->
+        <div>
+          <!-- Logo on dark bg: displayed in white-area respect zone per brand guidelines -->
+          <div style="display:inline-block;background:#fff;border-radius:8px;padding:8px 12px;margin-bottom:20px;">
+            <img src="Logo_Still.jpeg" alt="Associazione Italiana Malattia di Still" style="height:44px;width:auto;display:block;">
+          </div>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);max-width:280px;margin-bottom:24px;">
+            L'Associazione Italiana Malattia di Still nasce per supportare pazienti, famiglie e la ricerca scientifica su questa patologia rara.
+          </p>
+          <div style="display:flex;gap:10px;">
+            <a href="#" class="footer-social" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="#" class="footer-social" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+            </a>
+            <a href="#" class="footer-social" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- L'Associazione -->
+        <div>
+          <h4>L'Associazione</h4>
+          <a href="#">Chi siamo</a>
+          <a href="#">La nostra storia</a>
+          <a href="#">Il team</a>
+          <a href="#">Trasparenza</a>
+          <a href="#">Contatti</a>
+        </div>
+
+        <!-- Malattia & Pazienti -->
+        <div>
+          <h4>Pazienti</h4>
+          <a href="#">Cos'è la Still</a>
+          <a href="#">Diagnosi e sintomi</a>
+          <a href="#">Trattamenti</a>
+          <a href="#">Domande frequenti</a>
+          <a href="#">Centri medici</a>
+        </div>
+
+        <!-- Supporto -->
+        <div>
+          <h4>Supporto</h4>
+          <a href="#">Psicologico</a>
+          <a href="#">Informazione medica</a>
+          <a href="#">Comunità online</a>
+          <a href="#">Per le famiglie</a>
+          <a href="#">Dona ora</a>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div style="padding:24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <p style="font-size:13px;color:rgba(255,255,255,0.35);">
+          © 2026 Associazione Italiana Malattia di Still · Tutti i diritti riservati
+        </p>
+        <div style="display:flex;gap:24px;">
+          <a href="#" style="font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Privacy Policy</a>
+          <a href="#" style="font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Cookie Policy</a>
+          <a href="#" style="font-size:13px;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.7)'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Note legali</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Hamburger menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      mobileNav.setAttribute('aria-hidden', !open);
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileNav.setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    // ── Scroll-triggered nav ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ── Intersection Observer for fade-up ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── News card image hover zoom ──
+    document.querySelectorAll('.news-card img').forEach(img => {
+      const card = img.closest('.news-card');
+      card.addEventListener('mouseenter', () => { img.style.transform = 'scale(1.05)'; });
+      card.addEventListener('mouseleave', () => { img.style.transform = 'scale(1)'; });
+    });
+  </script>
+</body>
+</html>
