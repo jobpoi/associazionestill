@@ -684,6 +684,7 @@
       .hero-stat { flex: 1 1 100% !important; }
     }
   </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -1080,66 +1081,7 @@
         </a>
       </div>
 
-      <div class="news-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
-
-        <article class="news-card fade-up d1">
-          <div style="overflow:hidden;">
-            <img src="https://placehold.co/560x300/fdf0ee/E8867A?text=Ricerca+Clinica" alt="Studio clinico" style="width:100%;height:200px;object-fit:cover;transition:transform 0.5s ease;">
-          </div>
-          <div style="padding:28px;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-              <span class="tag">Ricerca</span>
-              <span style="font-size:12px;color:var(--gray);">15 marzo 2026</span>
-            </div>
-            <h3 style="font-size:1.1rem;font-weight:700;line-height:1.4;color:var(--dark);margin-bottom:10px;">
-              Nuovo studio clinico multicentrico sulla Malattia di Still adulta
-            </h3>
-            <p style="font-size:0.875rem;line-height:1.7;color:var(--gray);margin-bottom:16px;">
-              Un importante studio italiano analizza l'efficacia dei nuovi approcci terapeutici per la forma adulta della malattia.
-            </p>
-            <a href="#" class="link-arrow" style="font-size:13px;">Leggi l'articolo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          </div>
-        </article>
-
-        <article class="news-card fade-up d2">
-          <div style="overflow:hidden;">
-            <img src="https://placehold.co/560x300/fdf0ee/E8867A?text=Webinar" alt="Webinar" style="width:100%;height:200px;object-fit:cover;transition:transform 0.5s ease;">
-          </div>
-          <div style="padding:28px;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-              <span class="tag">Evento</span>
-              <span style="font-size:12px;color:var(--gray);">10 marzo 2026</span>
-            </div>
-            <h3 style="font-size:1.1rem;font-weight:700;line-height:1.4;color:var(--dark);margin-bottom:10px;">
-              Webinar: Vivere con una malattia rara — esperienze a confronto
-            </h3>
-            <p style="font-size:0.875rem;line-height:1.7;color:var(--gray);margin-bottom:16px;">
-              Un incontro online per condividere esperienze, strategie e risorse tra pazienti e specialisti del settore.
-            </p>
-            <a href="#" class="link-arrow" style="font-size:13px;">Registrati al webinar <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          </div>
-        </article>
-
-        <article class="news-card fade-up d3">
-          <div style="overflow:hidden;">
-            <img src="https://placehold.co/560x300/fdf0ee/E8867A?text=Giornata+Malattie+Rare" alt="Giornata malattie rare" style="width:100%;height:200px;object-fit:cover;transition:transform 0.5s ease;">
-          </div>
-          <div style="padding:28px;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-              <span class="tag">Iniziativa</span>
-              <span style="font-size:12px;color:var(--gray);">28 febbraio 2026</span>
-            </div>
-            <h3 style="font-size:1.1rem;font-weight:700;line-height:1.4;color:var(--dark);margin-bottom:10px;">
-              Giornata Mondiale delle Malattie Rare 2026 — la nostra partecipazione
-            </h3>
-            <p style="font-size:0.875rem;line-height:1.7;color:var(--gray);margin-bottom:16px;">
-              Come l'associazione ha partecipato alle iniziative della Giornata Mondiale, sensibilizzando il pubblico sulla Still.
-            </p>
-            <a href="#" class="link-arrow" style="font-size:13px;">Leggi il resoconto <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          </div>
-        </article>
-
-      </div>
+      <div class="news-grid" id="news-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;"></div>
     </div>
   </section>
 
@@ -1295,6 +1237,63 @@
       card.addEventListener('mouseenter', () => { img.style.transform = 'scale(1.05)'; });
       card.addEventListener('mouseleave', () => { img.style.transform = 'scale(1)'; });
     });
+  </script>
+
+  <script>
+    // Netlify Identity redirect
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', user => {
+        if (!user) {
+          window.netlifyIdentity.on('login', () => { document.location.href = '/admin/'; });
+        }
+      });
+    }
+
+    // Carica notizie da content/news.json
+    const svgArrow = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    fetch('/content/news.json')
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('news-grid');
+        const delays = ['d1', 'd2', 'd3'];
+        grid.innerHTML = data.articles.map((a, i) => `
+          <article class="news-card fade-up ${delays[i % 3]}">
+            <div style="overflow:hidden;">
+              <img src="${a.image || 'https://placehold.co/560x300/fdf0ee/E8867A?text=Notizia'}"
+                   alt="${a.title}"
+                   style="width:100%;height:200px;object-fit:cover;transition:transform 0.5s ease;">
+            </div>
+            <div style="padding:28px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span class="tag">${a.category}</span>
+                <span style="font-size:12px;color:var(--gray);">${a.date}</span>
+              </div>
+              <h3 style="font-size:1.1rem;font-weight:700;line-height:1.4;color:var(--dark);margin-bottom:10px;">
+                ${a.title}
+              </h3>
+              <p style="font-size:0.875rem;line-height:1.7;color:var(--gray);margin-bottom:16px;">
+                ${a.excerpt}
+              </p>
+              <a href="${a.link_url}" class="link-arrow" style="font-size:13px;">${a.link_text} ${svgArrow}</a>
+            </div>
+          </article>
+        `).join('');
+
+        // Rilancia animazioni sulle nuove card
+        grid.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Hover zoom immagini
+        grid.querySelectorAll('.news-card img').forEach(img => {
+          const card = img.closest('.news-card');
+          card.addEventListener('mouseenter', () => { img.style.transform = 'scale(1.05)'; });
+          card.addEventListener('mouseleave', () => { img.style.transform = 'scale(1)'; });
+        });
+      })
+      .catch(() => {
+        document.getElementById('news-grid').innerHTML =
+          '<p style="color:var(--gray);grid-column:1/-1;text-align:center;">Nessuna notizia disponibile al momento.</p>';
+      });
   </script>
 </body>
 </html>

@@ -1,0 +1,31 @@
+{
+  "articles": [
+    {
+      "title": "Nuovo studio clinico multicentrico sulla Malattia di Still adulta",
+      "category": "Ricerca",
+      "date": "15 marzo 2026",
+      "excerpt": "Un importante studio italiano analizza l'efficacia dei nuovi approcci terapeutici per la forma adulta della malattia.",
+      "image": "https://placehold.co/560x300/fdf0ee/E8867A?text=Ricerca+Clinica",
+      "link_text": "Leggi l'articolo",
+      "link_url": "#"
+    },
+    {
+      "title": "Webinar: Vivere con una malattia rara — esperienze a confronto",
+      "category": "Evento",
+      "date": "10 marzo 2026",
+      "excerpt": "Un incontro online per condividere esperienze, strategie e risorse tra pazienti e specialisti del settore.",
+      "image": "https://placehold.co/560x300/fdf0ee/E8867A?text=Webinar",
+      "link_text": "Registrati al webinar",
+      "link_url": "#"
+    },
+    {
+      "title": "Giornata Mondiale delle Malattie Rare 2026 — la nostra partecipazione",
+      "category": "Iniziativa",
+      "date": "28 febbraio 2026",
+      "excerpt": "Come l'associazione ha partecipato alle iniziative della Giornata Mondiale, sensibilizzando il pubblico sulla Still.",
+      "image": "https://placehold.co/560x300/fdf0ee/E8867A?text=Giornata+Malattie+Rare",
+      "link_text": "Leggi il resoconto",
+      "link_url": "#"
+    }
+  ]
+}

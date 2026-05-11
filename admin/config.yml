@@ -1,0 +1,36 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: content/images
+public_folder: /content/images
+
+locale: it
+
+collections:
+  - name: news
+    label: Notizie
+    files:
+      - name: news
+        label: Elenco Notizie
+        file: content/news.json
+        fields:
+          - name: articles
+            label: Articoli
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { name: title, label: Titolo, widget: string }
+              - name: category
+                label: Categoria
+                widget: select
+                options:
+                  - Ricerca
+                  - Evento
+                  - Iniziativa
+                  - Comunicato
+              - { name: date, label: Data, widget: string, hint: "Es: 15 marzo 2026" }
+              - { name: excerpt, label: Estratto, widget: text }
+              - { name: image, label: Immagine, widget: image, required: false }
+              - { name: link_text, label: Testo del link, widget: string, default: "Leggi l'articolo" }
+              - { name: link_url, label: URL articolo, widget: string, default: "#" }
