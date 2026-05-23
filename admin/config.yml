@@ -21,83 +21,67 @@ collections:
             widget: list
             summary: "{{fields.title}}"
             fields:
-              - { name: title,     label: Titolo,     widget: string }
+              - { name: title,     label: Titolo,      widget: string }
               - name: category
                 label: Categoria
                 widget: select
                 options: [Ricerca, Evento, Iniziativa, Comunicato]
-              - { name: date,      label: Data,        widget: string, hint: "Es: 15 marzo 2026" }
-              - { name: excerpt,   label: Estratto,    widget: text }
-              - { name: image,     label: Immagine,    widget: image, required: false }
-              - { name: link_text, label: Testo link,  widget: string, default: "Leggi l'articolo" }
+              - { name: date,      label: Data,         widget: string, hint: "Es: 15 marzo 2026" }
+              - { name: excerpt,   label: Estratto,     widget: text }
+              - { name: image,     label: Immagine,     widget: image, required: false }
+              - { name: link_text, label: Testo link,   widget: string, default: "Leggi l'articolo" }
               - { name: link_url,  label: URL articolo, widget: string, default: "#" }
 
   - name: sito
     label: Contenuti Sito
     files:
-
-      - name: hero
-        label: Hero (intestazione)
+      - name: contenuti
+        label: Tutti i contenuti del sito
         file: content/site.json
         fields:
+
           - name: hero
-            label: Sezione Hero
+            label: "① Hero — intestazione"
             widget: object
             fields:
               - { name: subtitle, label: Sottotitolo, widget: text }
               - name: stats
-                label: Statistiche hero (3 numeri)
+                label: 3 statistiche hero
                 widget: list
                 summary: "{{fields.number}} — {{fields.label}}"
                 fields:
-                  - { name: number, label: Numero, widget: string }
+                  - { name: number, label: Numero,    widget: string }
                   - { name: label,  label: Etichetta, widget: string }
 
-      - name: statistiche
-        label: Statistiche (sezione centrale)
-        file: content/site.json
-        fields:
           - name: statistiche
-            label: 4 statistiche principali
+            label: "② Statistiche centrali"
             widget: list
             summary: "{{fields.number}} — {{fields.label}}"
             fields:
-              - { name: number, label: Numero, widget: string }
+              - { name: number, label: Numero,    widget: string }
               - { name: label,  label: Etichetta, widget: string }
 
-      - name: testimonianza
-        label: Testimonianza
-        file: content/site.json
-        fields:
           - name: testimonianza
-            label: Citazione paziente
+            label: "③ Testimonianza paziente"
             widget: object
             fields:
-              - { name: quote,          label: Citazione,        widget: text }
-              - { name: author_name,    label: Nome autore,      widget: string }
-              - { name: author_details, label: Dettagli autore,  widget: string, hint: "Es: Paziente, 34 anni · Milano" }
+              - { name: quote,          label: Citazione,       widget: text }
+              - { name: author_name,    label: Nome autore,     widget: string }
+              - { name: author_details, label: Dettagli autore, widget: string, hint: "Es: Paziente, 34 anni · Milano" }
 
-      - name: donazioni
-        label: Sezione Donazioni
-        file: content/site.json
-        fields:
           - name: donazioni
-            label: Testi donazioni
+            label: "④ Sezione Donazioni"
             widget: object
             fields:
-              - { name: subtitle,        label: Testo descrittivo, widget: text }
-              - { name: iban,            label: IBAN,              widget: string }
-              - { name: codice_fiscale,  label: Codice Fiscale,    widget: string }
+              - { name: subtitle,       label: Testo descrittivo, widget: text }
+              - { name: iban,           label: IBAN,              widget: string }
+              - { name: codice_fiscale, label: Codice Fiscale,    widget: string }
 
-      - name: footer
-        label: Footer
-        file: content/site.json
-        fields:
           - name: footer
-            label: Testi e link footer
+            label: "⑤ Footer"
             widget: object
             fields:
               - { name: description,      label: Descrizione associazione, widget: text }
-              - { name: social_facebook,  label: URL Facebook,  widget: string }
-              - { name: social_instagram, label: URL Instagram,  widget: string }
-              - { name: social_linkedin,  label: URL LinkedIn,   widget: string }
+              - { name: social_facebook,  label: URL Facebook,             widget: string }
+              - { name: social_instagram, label: URL Instagram,            widget: string }
+              - { name: social_linkedin,  label: URL LinkedIn,             widget: string }
