@@ -85,3 +85,4 @@ collections:
               - { name: social_facebook,  label: URL Facebook,             widget: string }
               - { name: social_instagram, label: URL Instagram,            widget: string }
               - { name: social_linkedin,  label: URL LinkedIn,             widget: string }
+              - { name: email,            label: Indirizzo Email,          widget: string, hint: "Es: info@associazionestill.it" }

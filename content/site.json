@@ -2,37 +2,16 @@
   "hero": {
     "subtitle": "Supportiamo pazienti, famiglie e la ricerca scientifica per migliorare la qualità della vita di chi convive ogni giorno con questa patologia rara.",
     "stats": [
-      {
-        "number": "1 su 100.000",
-        "label": "persone colpite in Italia"
-      },
-      {
-        "number": "+500",
-        "label": "pazienti nella nostra comunità"
-      },
-      {
-        "number": "12",
-        "label": "centri medici partner"
-      }
+      { "number": "1 su 100.000", "label": "persone colpite in Italia" },
+      { "number": "+500",         "label": "pazienti nella nostra comunità" },
+      { "number": "12",           "label": "centri medici partner" }
     ]
   },
   "statistiche": [
-    {
-      "number": "+500",
-      "label": "Pazienti nella nostra comunità"
-    },
-    {
-      "number": "12",
-      "label": "Centri medici partner in Italia"
-    },
-    {
-      "number": "8",
-      "label": "Anni di attività dell'associazione"
-    },
-    {
-      "number": "+200",
-      "label": "Famiglie supportate"
-    }
+    { "number": "+500", "label": "Pazienti nella nostra comunità" },
+    { "number": "12",   "label": "Centri medici partner in Italia" },
+    { "number": "8",    "label": "Anni di attività dell'associazione" },
+    { "number": "+200", "label": "Famiglie supportate" }
   ],
   "testimonianza": {
     "quote": "Quando ho ricevuto la diagnosi, mi sono sentita sola e incompresa. L'Associazione mi ha dato qualcosa di prezioso: una comunità, parole di conforto, e la certezza di non essere l'unica a lottare ogni giorno.",
@@ -48,6 +27,7 @@
     "description": "L'Associazione Italiana Malattia di Still nasce per supportare pazienti, famiglie e la ricerca scientifica su questa patologia rara.",
     "social_facebook": "https://www.facebook.com/share/1D1SnRC5Ja/",
     "social_instagram": "https://www.instagram.com/stillitalia?utm_source=qr&igsh=dHFjODU5NTIzMWFw",
-    "social_linkedin": "#"
+    "social_linkedin": "#",
+    "email": "info@associazionestill.it"
   }
 }
