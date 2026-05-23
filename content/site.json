@@ -78,7 +78,7 @@
         "links": [
           {
             "label": "Chi siamo",
-            "url": "#"
+            "url": "#missione"
           },
           {
             "label": "Missione",
@@ -86,7 +86,7 @@
           },
           {
             "label": "Il team",
-            "url": "#"
+            "url": "#missione"
           },
           {
             "label": "Trasparenza",
@@ -94,7 +94,7 @@
           },
           {
             "label": "Contatti",
-            "url": "#"
+            "url": "#contatti"
           }
         ]
       },
@@ -103,15 +103,15 @@
         "links": [
           {
             "label": "Cos'è la Still",
-            "url": "#"
+            "url": "#malattia"
           },
           {
             "label": "Diagnosi e sintomi",
-            "url": "#"
+            "url": "#malattia"
           },
           {
             "label": "Trattamenti",
-            "url": "#"
+            "url": "#malattia"
           },
           {
             "label": "Domande frequenti",
@@ -128,19 +128,19 @@
         "links": [
           {
             "label": "Psicologico",
-            "url": "#"
+            "url": "#supporto"
           },
           {
             "label": "Informazione medica",
-            "url": "#"
+            "url": "#supporto"
           },
           {
             "label": "Comunità online",
-            "url": "#"
+            "url": "#supporto"
           },
           {
             "label": "Per le famiglie",
-            "url": "#"
+            "url": "#supporto"
           },
           {
             "label": "Dona ora",
