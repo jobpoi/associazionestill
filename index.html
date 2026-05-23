@@ -694,13 +694,7 @@
       <a href="#" style="display:flex;align-items:center;text-decoration:none;">
         <img src="Logo_Still.jpeg" alt="Associazione Italiana Malattia di Still" style="height:132px;width:auto;object-fit:contain;">
       </a>
-      <ul class="nav-links">
-        <li><a href="#malattia">La Malattia</a></li>
-        <li><a href="#missione">Missione</a></li>
-        <li><a href="#supporto">Supporto</a></li>
-        <li><a href="#notizie">Notizie</a></li>
-        <li><a href="#contatti" class="btn-nav">Dona ora</a></li>
-      </ul>
+      <ul id="nav-links" class="nav-links"></ul>
       <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -708,13 +702,7 @@
   </nav>
 
   <!-- Mobile nav overlay -->
-  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
-    <a href="#malattia" class="mobile-nav-link">La Malattia</a>
-    <a href="#missione" class="mobile-nav-link">Missione</a>
-    <a href="#supporto" class="mobile-nav-link">Supporto</a>
-    <a href="#notizie" class="mobile-nav-link">Notizie</a>
-    <a href="#contatti" class="btn-nav-m mobile-nav-link">Dona ora</a>
-  </nav>
+  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true"></nav>
 
   <!-- ════════════════════════════════ HERO ════════════════════════════════ -->
   <section id="hero">
@@ -1121,35 +1109,8 @@
           </div>
         </div>
 
-        <!-- L'Associazione -->
-        <div>
-          <h4>L'Associazione</h4>
-          <a href="#">Chi siamo</a>
-          <a href="#">La nostra storia</a>
-          <a href="#">Il team</a>
-          <a href="#">Trasparenza</a>
-          <a href="#">Contatti</a>
-        </div>
-
-        <!-- Malattia & Pazienti -->
-        <div>
-          <h4>Pazienti</h4>
-          <a href="#">Cos'è la Still</a>
-          <a href="#">Diagnosi e sintomi</a>
-          <a href="#">Trattamenti</a>
-          <a href="#">Domande frequenti</a>
-          <a href="#">Centri medici</a>
-        </div>
-
-        <!-- Supporto -->
-        <div>
-          <h4>Supporto</h4>
-          <a href="#">Psicologico</a>
-          <a href="#">Informazione medica</a>
-          <a href="#">Comunità online</a>
-          <a href="#">Per le famiglie</a>
-          <a href="#">Dona ora</a>
-        </div>
+        <!-- Colonne footer dinamiche -->
+        <div id="footer-columns" style="display:contents;"></div>
 
       </div>
 
@@ -1219,6 +1180,42 @@
       .then(s => {
         const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.textContent = val; };
         const setHref = (id, val) => { const el = document.getElementById(id); if (el && val) el.href = val; };
+
+        // Nav desktop
+        if (s.nav) {
+          const ul = document.getElementById('nav-links');
+          ul.innerHTML = (s.nav.links || []).map(l =>
+            `<li><a href="${l.url}">${l.label}</a></li>`
+          ).join('') +
+          `<li><a href="${s.nav.cta_url}" class="btn-nav">${s.nav.cta_label}</a></li>`;
+        }
+
+        // Nav mobile
+        if (s.nav) {
+          const mob = document.getElementById('mobile-nav');
+          mob.innerHTML = (s.nav.links || []).map(l =>
+            `<a href="${l.url}" class="mobile-nav-link">${l.label}</a>`
+          ).join('') +
+          `<a href="${s.nav.cta_url}" class="btn-nav-m mobile-nav-link">${s.nav.cta_label}</a>`;
+          mob.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+              hamburger.classList.remove('open');
+              mob.classList.remove('open');
+              hamburger.setAttribute('aria-expanded', 'false');
+              mob.setAttribute('aria-hidden', 'true');
+            });
+          });
+        }
+
+        // Footer colonne
+        if (s.footer?.columns) {
+          document.getElementById('footer-columns').innerHTML = s.footer.columns.map(col => `
+            <div>
+              <h4>${col.title}</h4>
+              ${(col.links || []).map(l => `<a href="${l.url}">${l.label}</a>`).join('')}
+            </div>
+          `).join('');
+        }
 
         // Hero
         set('hero-subtitle', s.hero?.subtitle);

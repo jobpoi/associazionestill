@@ -40,8 +40,22 @@ collections:
         file: content/site.json
         fields:
 
+          - name: nav
+            label: "① Menu di navigazione"
+            widget: object
+            fields:
+              - name: links
+                label: Voci menu
+                widget: list
+                summary: "{{fields.label}}"
+                fields:
+                  - { name: label, label: Etichetta, widget: string }
+                  - { name: url,   label: URL,       widget: string }
+              - { name: cta_label, label: Testo bottone CTA, widget: string }
+              - { name: cta_url,   label: URL bottone CTA,   widget: string }
+
           - name: hero
-            label: "① Hero — intestazione"
+            label: "② Hero — intestazione"
             widget: object
             fields:
               - { name: subtitle, label: Sottotitolo, widget: text }
@@ -54,7 +68,7 @@ collections:
                   - { name: label,  label: Etichetta, widget: string }
 
           - name: statistiche
-            label: "② Statistiche centrali"
+            label: "③ Statistiche centrali"
             widget: list
             summary: "{{fields.number}} — {{fields.label}}"
             fields:
@@ -62,7 +76,7 @@ collections:
               - { name: label,  label: Etichetta, widget: string }
 
           - name: testimonianza
-            label: "③ Testimonianza paziente"
+            label: "④ Testimonianza paziente"
             widget: object
             fields:
               - { name: quote,          label: Citazione,       widget: text }
@@ -70,7 +84,7 @@ collections:
               - { name: author_details, label: Dettagli autore, widget: string, hint: "Es: Paziente, 34 anni · Milano" }
 
           - name: donazioni
-            label: "④ Sezione Donazioni"
+            label: "⑤ Sezione Donazioni"
             widget: object
             fields:
               - { name: subtitle,       label: Testo descrittivo, widget: text }
@@ -78,7 +92,7 @@ collections:
               - { name: codice_fiscale, label: Codice Fiscale,    widget: string }
 
           - name: footer
-            label: "⑤ Footer"
+            label: "⑥ Footer"
             widget: object
             fields:
               - { name: description,      label: Descrizione associazione, widget: text }
@@ -86,3 +100,16 @@ collections:
               - { name: social_instagram, label: URL Instagram,            widget: string }
               - { name: social_linkedin,  label: URL LinkedIn,             widget: string }
               - { name: email,            label: Indirizzo Email,          widget: string, hint: "Es: info@associazionestill.it" }
+              - name: columns
+                label: Colonne link footer
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - { name: title, label: Titolo colonna, widget: string }
+                  - name: links
+                    label: Link
+                    widget: list
+                    summary: "{{fields.label}}"
+                    fields:
+                      - { name: label, label: Testo,  widget: string }
+                      - { name: url,   label: URL,    widget: string }

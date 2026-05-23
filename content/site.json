@@ -1,4 +1,14 @@
 {
+  "nav": {
+    "links": [
+      { "label": "La Malattia", "url": "#malattia" },
+      { "label": "Missione",    "url": "#missione" },
+      { "label": "Supporto",   "url": "#supporto" },
+      { "label": "Notizie",    "url": "#notizie" }
+    ],
+    "cta_label": "Dona ora",
+    "cta_url": "#contatti"
+  },
   "hero": {
     "subtitle": "Supportiamo pazienti, famiglie e la ricerca scientifica per migliorare la qualità della vita di chi convive ogni giorno con questa patologia rara.",
     "stats": [
@@ -28,6 +38,38 @@
     "social_facebook": "https://www.facebook.com/share/1D1SnRC5Ja/",
     "social_instagram": "https://www.instagram.com/stillitalia?utm_source=qr&igsh=dHFjODU5NTIzMWFw",
     "social_linkedin": "#",
-    "email": "info@associazionestill.it"
+    "email": "info@associazionestill.it",
+    "columns": [
+      {
+        "title": "L'Associazione",
+        "links": [
+          { "label": "Chi siamo",       "url": "#" },
+          { "label": "La nostra storia","url": "#" },
+          { "label": "Il team",         "url": "#" },
+          { "label": "Trasparenza",     "url": "#" },
+          { "label": "Contatti",        "url": "#" }
+        ]
+      },
+      {
+        "title": "Pazienti",
+        "links": [
+          { "label": "Cos'è la Still",    "url": "#" },
+          { "label": "Diagnosi e sintomi","url": "#" },
+          { "label": "Trattamenti",       "url": "#" },
+          { "label": "Domande frequenti", "url": "#" },
+          { "label": "Centri medici",     "url": "#" }
+        ]
+      },
+      {
+        "title": "Supporto",
+        "links": [
+          { "label": "Psicologico",        "url": "#" },
+          { "label": "Informazione medica","url": "#" },
+          { "label": "Comunità online",    "url": "#" },
+          { "label": "Per le famiglie",    "url": "#" },
+          { "label": "Dona ora",           "url": "#contatti" }
+        ]
+      }
+    ]
   }
 }
