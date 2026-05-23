@@ -1119,7 +1119,7 @@
         </p>
 
         <div class="fade-up d3" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:40px;">
-          <a href="#" class="btn-primary" style="font-size:16px;padding:16px 40px;">
+          <a href="https://buy.stripe.com/PLACEHOLDER" target="_blank" rel="noopener" id="btn-dona" class="btn-primary" style="font-size:16px;padding:16px 40px;">
             Dona ora
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 15C9 15 2 10.5 2 6C2 3.79 3.79 2 6 2C7.46 2 8.73 2.75 9 3.66C9.27 2.75 10.54 2 12 2C14.21 2 16 3.79 16 6C16 10.5 9 15 9 15Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>
           </a>
@@ -1216,6 +1216,68 @@
             </div>
 
           </div>
+        </div>
+
+        <!-- Modulo richiesta informazioni -->
+        <div class="fade-up d4" style="margin-top:32px;background:#fff;border-radius:16px;padding:40px;box-shadow:0 2px 12px rgba(192,57,43,0.07),0 8px 32px rgba(61,61,61,0.06);text-align:left;">
+
+          <h3 style="font-size:1.3rem;font-weight:700;color:var(--dark);margin-bottom:8px;letter-spacing:-0.01em;">Scrivici</h3>
+          <p style="font-size:0.95rem;line-height:1.75;color:var(--gray);margin-bottom:28px;">
+            Compila il modulo e ti risponderemo al più presto.
+          </p>
+
+          <form name="contatti" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="form-contatti"
+                style="display:flex;flex-direction:column;gap:16px;">
+            <input type="hidden" name="form-name" value="contatti">
+            <input type="hidden" name="bot-field" style="display:none;">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Nome e Cognome *</label>
+                <input type="text" name="nome" required placeholder="Mario Rossi"
+                  style="width:100%;padding:11px 14px;border:1.5px solid rgba(192,57,43,0.2);border-radius:8px;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.2s;"
+                  onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(192,57,43,0.2)'">
+              </div>
+              <div>
+                <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Email *</label>
+                <input type="email" name="email" required placeholder="mario@esempio.it"
+                  style="width:100%;padding:11px 14px;border:1.5px solid rgba(192,57,43,0.2);border-radius:8px;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.2s;"
+                  onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(192,57,43,0.2)'">
+              </div>
+            </div>
+
+            <div>
+              <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Oggetto</label>
+              <select name="oggetto"
+                style="width:100%;padding:11px 14px;border:1.5px solid rgba(192,57,43,0.2);border-radius:8px;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(192,57,43,0.2)'">
+                <option value="Informazioni generali">Informazioni generali</option>
+                <option value="Supporto pazienti">Supporto pazienti</option>
+                <option value="Donazioni">Donazioni</option>
+                <option value="Collaborazioni">Collaborazioni</option>
+                <option value="Altro">Altro</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Messaggio *</label>
+              <textarea name="messaggio" required rows="5" placeholder="Scrivi qui il tuo messaggio..."
+                style="width:100%;padding:11px 14px;border:1.5px solid rgba(192,57,43,0.2);border-radius:8px;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;resize:vertical;transition:border-color 0.2s;font-family:inherit;"
+                onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(192,57,43,0.2)'"></textarea>
+            </div>
+
+            <div>
+              <button type="submit" class="btn-primary" style="font-size:15px;padding:13px 32px;border:none;cursor:pointer;">
+                Invia messaggio
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+
+            <div id="form-success" style="display:none;padding:14px 18px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;color:#166534;font-size:0.9rem;">
+              ✓ Messaggio inviato con successo. Ti risponderemo al più presto!
+            </div>
+          </form>
+
         </div>
 
       </div>
@@ -1402,6 +1464,18 @@
         const emailEl = document.getElementById('footer-email');
         if (emailEl && s.footer?.email) emailEl.href = 'mailto:' + s.footer.email;
       });
+
+    // Gestione form contatti
+    const formContatti = document.getElementById('form-contatti');
+    if (formContatti) {
+      formContatti.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = new URLSearchParams(new FormData(formContatti));
+        await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data });
+        document.getElementById('form-success').style.display = 'block';
+        formContatti.reset();
+      });
+    }
 
     // Netlify Identity redirect
     if (window.netlifyIdentity) {
