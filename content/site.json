@@ -1,10 +1,22 @@
 {
   "nav": {
     "links": [
-      { "label": "La Malattia", "url": "#malattia" },
-      { "label": "Missione",    "url": "#missione" },
-      { "label": "Supporto",   "url": "#supporto" },
-      { "label": "Notizie",    "url": "#notizie" }
+      {
+        "label": "Cosa facciamo",
+        "url": "#malattia"
+      },
+      {
+        "label": "Missione",
+        "url": "#missione"
+      },
+      {
+        "label": "Supporto",
+        "url": "#supporto"
+      },
+      {
+        "label": "Notizie",
+        "url": "#notizie"
+      }
     ],
     "cta_label": "Dona ora",
     "cta_url": "#contatti"
@@ -12,16 +24,37 @@
   "hero": {
     "subtitle": "Supportiamo pazienti, famiglie e la ricerca scientifica per migliorare la qualità della vita di chi convive ogni giorno con questa patologia rara.",
     "stats": [
-      { "number": "1 su 100.000", "label": "persone colpite in Italia" },
-      { "number": "+500",         "label": "pazienti nella nostra comunità" },
-      { "number": "12",           "label": "centri medici partner" }
+      {
+        "number": "1 su 100.000",
+        "label": "persone colpite in Italia"
+      },
+      {
+        "number": "+500",
+        "label": "pazienti nella nostra comunità"
+      },
+      {
+        "number": "12",
+        "label": "centri medici partner"
+      }
     ]
   },
   "statistiche": [
-    { "number": "+500", "label": "Pazienti nella nostra comunità" },
-    { "number": "12",   "label": "Centri medici partner in Italia" },
-    { "number": "8",    "label": "Anni di attività dell'associazione" },
-    { "number": "+200", "label": "Famiglie supportate" }
+    {
+      "number": "+500",
+      "label": "Pazienti nella nostra comunità"
+    },
+    {
+      "number": "12",
+      "label": "Centri medici partner in Italia"
+    },
+    {
+      "number": "8",
+      "label": "Anni di attività dell'associazione"
+    },
+    {
+      "number": "+200",
+      "label": "Famiglie supportate"
+    }
   ],
   "testimonianza": {
     "quote": "Quando ho ricevuto la diagnosi, mi sono sentita sola e incompresa. L'Associazione mi ha dato qualcosa di prezioso: una comunità, parole di conforto, e la certezza di non essere l'unica a lottare ogni giorno.",
@@ -43,31 +76,76 @@
       {
         "title": "L'Associazione",
         "links": [
-          { "label": "Chi siamo",       "url": "#" },
-          { "label": "La nostra storia","url": "#" },
-          { "label": "Il team",         "url": "#" },
-          { "label": "Trasparenza",     "url": "#" },
-          { "label": "Contatti",        "url": "#" }
+          {
+            "label": "Chi siamo",
+            "url": "#"
+          },
+          {
+            "label": "La nostra storia",
+            "url": "#"
+          },
+          {
+            "label": "Il team",
+            "url": "#"
+          },
+          {
+            "label": "Trasparenza",
+            "url": "#"
+          },
+          {
+            "label": "Contatti",
+            "url": "#"
+          }
         ]
       },
       {
         "title": "Pazienti",
         "links": [
-          { "label": "Cos'è la Still",    "url": "#" },
-          { "label": "Diagnosi e sintomi","url": "#" },
-          { "label": "Trattamenti",       "url": "#" },
-          { "label": "Domande frequenti", "url": "#" },
-          { "label": "Centri medici",     "url": "#" }
+          {
+            "label": "Cos'è la Still",
+            "url": "#"
+          },
+          {
+            "label": "Diagnosi e sintomi",
+            "url": "#"
+          },
+          {
+            "label": "Trattamenti",
+            "url": "#"
+          },
+          {
+            "label": "Domande frequenti",
+            "url": "#"
+          },
+          {
+            "label": "Centri medici",
+            "url": "#"
+          }
         ]
       },
       {
         "title": "Supporto",
         "links": [
-          { "label": "Psicologico",        "url": "#" },
-          { "label": "Informazione medica","url": "#" },
-          { "label": "Comunità online",    "url": "#" },
-          { "label": "Per le famiglie",    "url": "#" },
-          { "label": "Dona ora",           "url": "#contatti" }
+          {
+            "label": "Psicologico",
+            "url": "#"
+          },
+          {
+            "label": "Informazione medica",
+            "url": "#"
+          },
+          {
+            "label": "Comunità online",
+            "url": "#"
+          },
+          {
+            "label": "Per le famiglie",
+            "url": "#"
+          },
+          {
+            "label": "Dona ora",
+            "url": "#contatti"
+          }
         ]
       }
     ]
