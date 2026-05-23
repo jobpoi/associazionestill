@@ -16,6 +16,10 @@
       {
         "label": "Notizie",
         "url": "#notizie"
+      },
+      {
+        "label": "Ricerca",
+        "url": "#trials"
       }
     ],
     "cta_label": "Dona ora",
