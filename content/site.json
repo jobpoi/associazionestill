@@ -1,0 +1,32 @@
+{
+  "hero": {
+    "subtitle": "Supportiamo pazienti, famiglie e la ricerca scientifica per migliorare la qualità della vita di chi convive ogni giorno con questa patologia rara.",
+    "stats": [
+      { "number": "1 su 100.000", "label": "persone colpite in Italia" },
+      { "number": "+500",         "label": "pazienti nella nostra comunità" },
+      { "number": "12",           "label": "centri medici partner" }
+    ]
+  },
+  "statistiche": [
+    { "number": "+500", "label": "Pazienti nella nostra comunità" },
+    { "number": "12",   "label": "Centri medici partner in Italia" },
+    { "number": "8",    "label": "Anni di attività dell'associazione" },
+    { "number": "+200", "label": "Famiglie supportate" }
+  ],
+  "testimonianza": {
+    "quote": "Quando ho ricevuto la diagnosi, mi sono sentita sola e incompresa. L'Associazione mi ha dato qualcosa di prezioso: una comunità, parole di conforto, e la certezza di non essere l'unica a lottare ogni giorno.",
+    "author_name": "Maria R.",
+    "author_details": "Paziente, 34 anni · Milano"
+  },
+  "donazioni": {
+    "subtitle": "Il tuo contributo ci permette di supportare nuovi pazienti, finanziare la ricerca e ampliare i servizi della nostra comunità. Ogni donazione, grande o piccola, fa la differenza nella vita di una persona con la Malattia di Still.",
+    "iban": "IT00 X000 0000 0000 0000 0000 000",
+    "codice_fiscale": "00000000000"
+  },
+  "footer": {
+    "description": "L'Associazione Italiana Malattia di Still nasce per supportare pazienti, famiglie e la ricerca scientifica su questa patologia rara.",
+    "social_facebook": "#",
+    "social_instagram": "#",
+    "social_linkedin": "#"
+  }
+}
