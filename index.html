@@ -1261,7 +1261,8 @@
             Dona ora
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 15C9 15 2 10.5 2 6C2 3.79 3.79 2 6 2C7.46 2 8.73 2.75 9 3.66C9.27 2.75 10.54 2 12 2C14.21 2 16 3.79 16 6C16 10.5 9 15 9 15Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#" class="btn-outline" style="font-size:16px;padding:15px 39px;">Diventa socio</a>
+          <a href="#contatti" onclick="preselezionaInteresse('socio')" class="btn-outline" style="font-size:16px;padding:15px 39px;">Diventa socio</a>
+          <a href="#contatti" onclick="preselezionaInteresse('volontario')" class="btn-outline" style="font-size:16px;padding:15px 39px;">Diventa volontario</a>
         </div>
 
         <!-- Riquadro informazioni donazione -->
@@ -1397,6 +1398,22 @@
                 <option value="Collaborazioni">Collaborazioni</option>
                 <option value="Altro">Altro</option>
               </select>
+            </div>
+
+            <div>
+              <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:10px;">Mi interessa</label>
+              <div style="display:flex;gap:28px;flex-wrap:wrap;">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.95rem;color:var(--gray);">
+                  <input type="checkbox" id="check-socio" name="Diventare Socio" value="Sì"
+                    style="width:17px;height:17px;accent-color:var(--red);cursor:pointer;">
+                  Diventare Socio
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.95rem;color:var(--gray);">
+                  <input type="checkbox" id="check-volontario" name="Diventare Volontario" value="Sì"
+                    style="width:17px;height:17px;accent-color:var(--red);cursor:pointer;">
+                  Diventare Volontario
+                </label>
+              </div>
             </div>
 
             <div>
@@ -1604,6 +1621,15 @@
         const emailEl = document.getElementById('footer-email');
         if (emailEl && s.footer?.email) emailEl.href = 'mailto:' + s.footer.email;
       });
+
+    function preselezionaInteresse(tipo) {
+      setTimeout(function() {
+        const socio = document.getElementById('check-socio');
+        const volontario = document.getElementById('check-volontario');
+        if (socio) socio.checked = (tipo === 'socio');
+        if (volontario) volontario.checked = (tipo === 'volontario');
+      }, 80);
+    }
 
     // Gestione form contatti
     const formContatti = document.getElementById('form-contatti');
