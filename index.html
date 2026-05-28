@@ -687,7 +687,6 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate icon" type="image/jpeg" href="/Logo_Still.jpeg">
   <link rel="apple-touch-icon" href="/Logo_Still.jpeg">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -1365,10 +1364,12 @@
             Compila il modulo e ti risponderemo al più presto.
           </p>
 
-          <form name="contatti" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="form-contatti"
+          <form action="https://api.web3forms.com/submit" method="POST" id="form-contatti"
                 style="display:flex;flex-direction:column;gap:16px;">
-            <input type="hidden" name="form-name" value="contatti">
-            <input type="hidden" name="bot-field" style="display:none;">
+            <input type="hidden" name="access_key" value="fa1fbf7c-f653-449b-9a30-d8da98606a95">
+            <input type="hidden" name="subject" value="Nuovo messaggio dal sito Associazione Still">
+            <input type="hidden" name="redirect" value="false">
+            <input type="checkbox" name="botcheck" style="display:none;">
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
               <div>
@@ -1609,18 +1610,12 @@
     if (formContatti) {
       formContatti.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const data = new URLSearchParams(new FormData(formContatti));
-        await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data });
-        document.getElementById('form-success').style.display = 'block';
-        formContatti.reset();
-      });
-    }
-
-    // Netlify Identity redirect
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', user => {
-        if (!user) {
-          window.netlifyIdentity.on('login', () => { document.location.href = '/admin/'; });
+        const data = new FormData(formContatti);
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+        const json = await res.json();
+        if (json.success) {
+          document.getElementById('form-success').style.display = 'block';
+          formContatti.reset();
         }
       });
     }

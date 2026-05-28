@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: jobpoi/associazionestill
   branch: main
+  auth_type: pkce
+  app_id: Ov23li8rzO8E2rLHuXpH
 
 media_folder: content/images
 public_folder: /content/images
