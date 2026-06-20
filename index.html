@@ -855,7 +855,7 @@
             </div>
           </div>
           <div class="fade-up d4" style="display:flex;flex-direction:column;gap:10px;">
-            <a href="https://www.ospedalebambinogesu.it/artrite-idiopatica-giovanile-sistemica-89692" target="_blank" rel="noopener" class="link-arrow">
+            <a href="https://www.ospedalebambinogesu.it/artrite-idiopatica-giovanile-aig--79943/" target="_blank" rel="noopener" class="link-arrow">
               Ospedale Bambino Gesù — Artrite Idiopatica Giovanile Sistemica
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -1463,8 +1463,7 @@
             Dona ora
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 15C9 15 2 10.5 2 6C2 3.79 3.79 2 6 2C7.46 2 8.73 2.75 9 3.66C9.27 2.75 10.54 2 12 2C14.21 2 16 3.79 16 6C16 10.5 9 15 9 15Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#contatti" onclick="preselezionaInteresse('socio')" class="btn-outline" style="font-size:16px;padding:15px 39px;">Diventa socio</a>
-          <a href="#contatti" onclick="preselezionaInteresse('volontario')" class="btn-outline" style="font-size:16px;padding:15px 39px;">Diventa volontario</a>
+          <a href="#modulo-info" onclick="preselezionaInteresse('socio')" class="btn-outline" style="font-size:16px;padding:15px 39px;">Diventa socio</a>
         </div>
 
         <!-- Riquadro informazioni donazione -->
@@ -1592,7 +1591,7 @@
         </div>
 
         <!-- Modulo richiesta informazioni -->
-        <div class="fade-up d4" style="margin-top:32px;background:#fff;border-radius:16px;padding:40px;box-shadow:0 2px 12px rgba(192,57,43,0.07),0 8px 32px rgba(61,61,61,0.06);text-align:left;">
+        <div id="modulo-info" class="fade-up d4" style="scroll-margin-top:110px;margin-top:32px;background:#fff;border-radius:16px;padding:40px;box-shadow:0 2px 12px rgba(192,57,43,0.07),0 8px 32px rgba(61,61,61,0.06);text-align:left;">
 
           <h3 style="font-size:1.3rem;font-weight:700;color:var(--dark);margin-bottom:8px;letter-spacing:-0.01em;">Scrivici</h3>
           <p style="font-size:0.95rem;line-height:1.75;color:var(--gray);margin-bottom:28px;">
@@ -1608,17 +1607,24 @@
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
               <div>
-                <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Nome e Cognome *</label>
-                <input type="text" name="nome" required placeholder="Mario Rossi"
+                <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Nome *</label>
+                <input type="text" name="nome" required placeholder="Mario"
                   style="width:100%;padding:11px 14px;border:1.5px solid rgba(192,57,43,0.2);border-radius:8px;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.2s;"
                   onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(192,57,43,0.2)'">
               </div>
               <div>
-                <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Email *</label>
-                <input type="email" name="email" required placeholder="mario@esempio.it"
+                <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Cognome *</label>
+                <input type="text" name="cognome" required placeholder="Rossi"
                   style="width:100%;padding:11px 14px;border:1.5px solid rgba(192,57,43,0.2);border-radius:8px;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.2s;"
                   onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(192,57,43,0.2)'">
               </div>
+            </div>
+
+            <div>
+              <label style="font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">Email *</label>
+              <input type="email" name="email" required placeholder="mario@esempio.it"
+                style="width:100%;padding:11px 14px;border:1.5px solid rgba(192,57,43,0.2);border-radius:8px;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='rgba(192,57,43,0.2)'">
             </div>
 
             <div>
@@ -1641,11 +1647,6 @@
                   <input type="checkbox" id="check-socio" name="Diventare Socio" value="Sì"
                     style="width:17px;height:17px;accent-color:var(--red);cursor:pointer;">
                   Diventare Socio
-                </label>
-                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.95rem;color:var(--gray);">
-                  <input type="checkbox" id="check-volontario" name="Diventare Volontario" value="Sì"
-                    style="width:17px;height:17px;accent-color:var(--red);cursor:pointer;">
-                  Diventare Volontario
                 </label>
               </div>
             </div>
