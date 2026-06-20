@@ -1945,5 +1945,35 @@
           '<p style="color:var(--gray);grid-column:1/-1;text-align:center;">Nessuna notizia disponibile al momento.</p>';
       });
   </script>
+
+  <script>
+    // Deep-link robusto: i contenuti async (notizie con immagini, statistiche) si
+    // caricano DOPO il salto iniziale del browser e allungano la pagina, spostando
+    // l'ancora. Qui ri-allineiamo il target finché il layout non si assesta.
+    (function () {
+      if (!location.hash || location.hash.length < 2) return;
+
+      function align() {
+        let el;
+        try { el = document.querySelector(location.hash); } catch (_) { return; }
+        if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+      }
+
+      // Ri-allinea per ~2,5s mentre i contenuti async si assestano
+      let ticks = 0;
+      const iv = setInterval(() => {
+        align();
+        if (++ticks >= 25) clearInterval(iv);
+      }, 100);
+
+      // Correzione finale quando tutte le immagini sono caricate
+      window.addEventListener('load', align);
+
+      // Non ostacolare l'utente: se scorre manualmente, smettiamo di riallineare
+      const stop = () => clearInterval(iv);
+      window.addEventListener('wheel', stop, { passive: true, once: true });
+      window.addEventListener('touchmove', stop, { passive: true, once: true });
+    })();
+  </script>
 </body>
 </html>
