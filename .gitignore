@@ -4,3 +4,21 @@
 !.dev.vars.example
 .env*
 !.env.example
+
+# Dipendenze npm (reinstallabili con `npm install`)
+node_modules/
+
+# Build non tracciato (si lavora su index.html nella root)
+dist/
+
+# Screenshot di lavoro
+temporary screenshots/
+
+# Script di utilità locali per i QR (i file finali stanno in qr-code/)
+generate-qr*.mjs
+make-emblem.mjs
+add-logo*.mjs
+
+# Script di verifica/riproduzione usa-e-getta
+verify*.mjs
+repro*.mjs
