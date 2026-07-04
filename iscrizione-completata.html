@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iscrizione completata — Associazione Italiana Malattia di Still</title>
+  <link rel="alternate icon" type="image/jpeg" href="/Logo_Still.jpeg">
+  <link rel="apple-touch-icon" href="/Logo_Still.jpeg">
+  <style>
+    :root {
+      --red: #C0392B;
+      --red-dark: #a93226;
+      --salmon: #E8867A;
+      --light: #F2B5A8;
+      --pale: #FAD9D4;
+      --pale-light: #fdf0ee;
+      --dark: #3D3D3D;
+      --gray: #6B6B6B;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Calibri, 'Trebuchet MS', 'Gill Sans', sans-serif;
+      color: var(--dark);
+      background: linear-gradient(160deg, var(--pale-light) 0%, #fff6f5 40%, var(--pale) 100%);
+      background-attachment: fixed;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
+
+    a { color: var(--red); }
+
+    /* ── HEADER ── */
+    header.page-header {
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(192,57,43,0.08), 0 4px 32px rgba(61,61,61,0.06);
+    }
+    header.page-header .inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 22px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    header.page-header img {
+      height: 68px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    header.page-header h1 {
+      font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--dark);
+    }
+    header.page-header .back-link {
+      display: block;
+      font-size: 13px;
+      color: var(--red);
+      text-decoration: none;
+      margin-bottom: 4px;
+    }
+    header.page-header .back-link:hover { text-decoration: underline; }
+
+    main { max-width: 700px; margin: 0 auto; padding: 64px 32px 96px; }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 2px 8px rgba(192,57,43,0.04), 0 8px 32px rgba(192,57,43,0.07);
+      border: 1px solid rgba(250,217,212,0.5);
+      margin-bottom: 28px;
+    }
+
+    .intro-card { text-align: center; padding: 40px 44px; }
+
+    .check-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: var(--pale-light);
+      border: 1.5px solid var(--salmon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .check-icon svg { width: 30px; height: 30px; }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    h2.esito-titolo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+      margin-bottom: 14px;
+    }
+
+    .intro-card > p {
+      font-size: 0.95rem;
+      color: var(--gray);
+    }
+
+    #dettaglio {
+      text-align: left;
+      margin-top: 28px;
+      padding: 22px 24px;
+      border-radius: 10px;
+      background: var(--pale-light);
+      border: 1.5px dashed var(--salmon);
+      font-size: 0.92rem;
+      color: var(--dark);
+    }
+    #dettaglio p { margin-bottom: 10px; }
+    #dettaglio p:last-child { margin-bottom: 0; }
+    #dettaglio strong { color: var(--red); }
+    #dettaglio .iban {
+      font-family: 'Courier New', monospace;
+      font-size: 1.02rem;
+      letter-spacing: 0.02em;
+      display: inline-block;
+      background: #fff;
+      border: 1px solid rgba(192,57,43,0.2);
+      border-radius: 6px;
+      padding: 4px 10px;
+      margin-top: 4px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--red);
+      color: #fff;
+      padding: 15px 34px;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 32px;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 12px rgba(192,57,43,0.25), 0 1px 4px rgba(192,57,43,0.15);
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 5px 22px rgba(192,57,43,0.35), 0 2px 8px rgba(192,57,43,0.2); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid var(--red-dark); outline-offset: 3px; }
+
+    @media (max-width: 640px) {
+      main { padding: 40px 18px 64px; }
+      .card, .intro-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div class="inner">
+      <a href="/" style="display:flex;align-items:center;text-decoration:none;">
+        <img src="Logo_Still.jpeg" alt="Associazione Italiana Malattia di Still">
+      </a>
+      <div>
+        <a href="/" class="back-link">&larr; Torna al sito</a>
+        <h1>Iscrizione Socio</h1>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="card intro-card">
+      <div class="check-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div class="eyebrow">Richiesta registrata</div>
+      <h2 class="esito-titolo">Grazie! La tua richiesta di iscrizione è stata registrata.</h2>
+      <p>Ecco i dettagli per completare la procedura.</p>
+
+      <div id="dettaglio"></div>
+
+      <a href="/" class="btn-primary">Torna alla home</a>
+    </div>
+  </main>
+
+  <script>
+    const metodo = new URLSearchParams(location.search).get('metodo');
+    const box = document.getElementById('dettaglio');
+    if (metodo === 'bonifico') {
+      box.innerHTML = `<p>Completa il pagamento con un bonifico di <strong>€30,00</strong>:</p>
+        <p><strong>IBAN:</strong><br><span class="iban">IT82 C062 3005 0720 0003 6140 126</span></p>
+        <p><strong>Causale:</strong> Iscrizione 2026 — Nome Cognome</p>
+        <p>Hai ricevuto via email una copia del modulo compilato.</p>`;
+    } else {
+      box.innerHTML = `<p>Pagamento ricevuto. Ti abbiamo inviato via email la copia del modulo compilato.</p>`;
+    }
+  </script>
+
+</body>
+</html>
