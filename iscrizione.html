@@ -571,6 +571,7 @@
         consensoComunicazioni: form.querySelector('input[name="consensoComunicazioni"]').checked,
         consensoPrivacy: form.querySelector('input[name="consensoPrivacy"]').checked,
         luogo: g('luogo'), dataFirma: g('dataFirma'),
+        website: g('website'),
       };
     }
 
@@ -591,7 +592,19 @@
           return;
         }
         if (!res.ok || !json.ok) {
-          esito.innerHTML = '<strong>Errori:</strong><br>' + (json.errors || [json.error || 'Errore']).join('<br>');
+          esito.textContent = '';
+          const titolo = document.createElement('strong');
+          titolo.textContent = 'Errori:';
+          esito.appendChild(titolo);
+          const lista = document.createElement('ul');
+          lista.style.margin = '8px 0 0';
+          lista.style.paddingLeft = '20px';
+          (json.errors || [json.error || 'Errore']).forEach((e) => {
+            const li = document.createElement('li');
+            li.textContent = e;
+            lista.appendChild(li);
+          });
+          esito.appendChild(lista);
           return;
         }
         if (json.metodo === 'bonifico') {

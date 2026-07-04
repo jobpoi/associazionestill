@@ -56,4 +56,14 @@ describe('POST /api/iscrizione/submit', () => {
     const res = await onRequestPost({ request, env });
     expect(res.status).toBe(501);
   });
+
+  it('honeypot compilato: 400, nessuna email, KV vuoto', async () => {
+    const { request, env, kv } = makeCtx({ ...valido, website: 'http://spam' });
+    const res = await onRequestPost({ request, env });
+    expect(res.status).toBe(400);
+    const json = await res.json();
+    expect(json.ok).toBe(false);
+    expect(inviaEmailIscrizione).not.toHaveBeenCalled();
+    expect(kv.store.size).toBe(0);
+  });
 });

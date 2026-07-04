@@ -18,6 +18,10 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, errors: ['Body non valido'] }, 400);
   }
 
+  if (typeof data.website === 'string' && data.website.trim() !== '') {
+    return json({ ok: false, errors: ['Invio non valido'] }, 400);
+  }
+
   const { ok, errors, value } = validateIscrizione(data);
   if (!ok) return json({ ok: false, errors }, 400);
 
