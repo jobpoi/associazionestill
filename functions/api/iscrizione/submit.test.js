@@ -9,6 +9,11 @@ vi.mock('../../_lib/stripe.js', () => ({
 }));
 import { createCheckoutSession } from '../../_lib/stripe.js';
 
+vi.mock('../../_lib/paypal.js', () => ({
+  createPayPalOrder: vi.fn().mockResolvedValue('https://www.paypal.com/checkoutnow?token=ORD1'),
+}));
+import { createPayPalOrder } from '../../_lib/paypal.js';
+
 function makeCtx(body) {
   const kv = { store: new Map(),
     put(k, v, o) { this.store.set(k, v); return Promise.resolve(); },
@@ -67,6 +72,19 @@ describe('POST /api/iscrizione/submit', () => {
     expect(createCheckoutSession).toHaveBeenCalledOnce();
     expect(kv.store.size).toBe(1); // KV resta: sarà il webhook a cancellarlo
     expect(inviaEmailIscrizione).not.toHaveBeenCalled(); // email solo dopo pagamento
+  });
+
+  it('paypal: crea ordine e risponde 200 con url', async () => {
+    const { request, env, kv } = makeCtx({ ...valido, metodoPagamento: 'paypal' });
+    const res = await onRequestPost({ request, env });
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.ok).toBe(true);
+    expect(json.metodo).toBe('paypal');
+    expect(json.url).toMatch(/paypal\.com/);
+    expect(createPayPalOrder).toHaveBeenCalledOnce();
+    expect(kv.store.size).toBe(1);
+    expect(inviaEmailIscrizione).not.toHaveBeenCalled();
   });
 
   it('honeypot compilato: 400, nessuna email, KV vuoto', async () => {

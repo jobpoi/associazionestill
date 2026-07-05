@@ -3,6 +3,7 @@ import { generaPdfIscrizione } from '../../_lib/pdf.js';
 import { inviaEmailIscrizione } from '../../_lib/email.js';
 import { IBAN } from '../../_lib/config.js';
 import { createCheckoutSession } from '../../_lib/stripe.js';
+import { createPayPalOrder } from '../../_lib/paypal.js';
 
 const json = (obj, status = 200) =>
   new Response(JSON.stringify(obj), { status, headers: { 'Content-Type': 'application/json' } });
@@ -51,6 +52,15 @@ export async function onRequestPost({ request, env }) {
     }
   }
 
-  // PayPal completato nel Piano 3.
-  return json({ ok: false, error: 'pagamento online non ancora disponibile' }, 501);
+  if (value.metodoPagamento === 'paypal') {
+    try {
+      const origin = new URL(request.url).origin;
+      const url = await createPayPalOrder(env, { kvId: id, origin });
+      return json({ ok: true, metodo: 'paypal', url });
+    } catch (e) {
+      return json({ ok: false, errors: ['Errore nell\'avvio del pagamento: ' + e.message] }, 502);
+    }
+  }
+
+  return json({ ok: false, errors: ['Metodo di pagamento non gestito'] }, 400);
 }
