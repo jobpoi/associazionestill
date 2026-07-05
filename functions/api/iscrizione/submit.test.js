@@ -4,6 +4,11 @@ import { onRequestPost } from './submit.js';
 vi.mock('../../_lib/email.js', () => ({ inviaEmailIscrizione: vi.fn().mockResolvedValue(undefined) }));
 import { inviaEmailIscrizione } from '../../_lib/email.js';
 
+vi.mock('../../_lib/stripe.js', () => ({
+  createCheckoutSession: vi.fn().mockResolvedValue('https://checkout.stripe.com/c/pay/xyz'),
+}));
+import { createCheckoutSession } from '../../_lib/stripe.js';
+
 function makeCtx(body) {
   const kv = { store: new Map(),
     put(k, v, o) { this.store.set(k, v); return Promise.resolve(); },
@@ -51,10 +56,17 @@ describe('POST /api/iscrizione/submit', () => {
     expect(inviaEmailIscrizione).not.toHaveBeenCalled();
   });
 
-  it('stripe: 501 finché non implementato', async () => {
-    const { request, env } = makeCtx({ ...valido, metodoPagamento: 'stripe' });
+  it('stripe: crea checkout session e risponde 200 con url', async () => {
+    const { request, env, kv } = makeCtx({ ...valido, metodoPagamento: 'stripe' });
     const res = await onRequestPost({ request, env });
-    expect(res.status).toBe(501);
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.ok).toBe(true);
+    expect(json.metodo).toBe('stripe');
+    expect(json.url).toMatch(/checkout\.stripe\.com/);
+    expect(createCheckoutSession).toHaveBeenCalledOnce();
+    expect(kv.store.size).toBe(1); // KV resta: sarà il webhook a cancellarlo
+    expect(inviaEmailIscrizione).not.toHaveBeenCalled(); // email solo dopo pagamento
   });
 
   it('honeypot compilato: 400, nessuna email, KV vuoto', async () => {

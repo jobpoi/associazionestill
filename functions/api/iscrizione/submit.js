@@ -2,6 +2,7 @@ import { validateIscrizione } from '../../_lib/validate.js';
 import { generaPdfIscrizione } from '../../_lib/pdf.js';
 import { inviaEmailIscrizione } from '../../_lib/email.js';
 import { IBAN } from '../../_lib/config.js';
+import { createCheckoutSession } from '../../_lib/stripe.js';
 
 const json = (obj, status = 200) =>
   new Response(JSON.stringify(obj), { status, headers: { 'Content-Type': 'application/json' } });
@@ -26,8 +27,8 @@ export async function onRequestPost({ request, env }) {
   if (!ok) return json({ ok: false, errors }, 400);
 
   const id = newId();
-  // Storage transitorio: TTL 1h; cancellato dopo l'invio.
-  await env.ISCRIZIONI_KV.put(id, JSON.stringify(value), { expirationTtl: 3600 });
+  // Storage transitorio: TTL 24h; cancellato dopo l'invio (o dal webhook Stripe).
+  await env.ISCRIZIONI_KV.put(id, JSON.stringify(value), { expirationTtl: 86400 });
 
   if (value.metodoPagamento === 'bonifico') {
     try {
@@ -40,6 +41,16 @@ export async function onRequestPost({ request, env }) {
     }
   }
 
-  // Stripe/PayPal completati nei Piani 2 e 3.
+  if (value.metodoPagamento === 'stripe') {
+    try {
+      const origin = new URL(request.url).origin;
+      const url = await createCheckoutSession(env, { kvId: id, email: value.socio.email, origin });
+      return json({ ok: true, metodo: 'stripe', url });
+    } catch (e) {
+      return json({ ok: false, errors: ['Errore nell\'avvio del pagamento: ' + e.message] }, 502);
+    }
+  }
+
+  // PayPal completato nel Piano 3.
   return json({ ok: false, error: 'pagamento online non ancora disponibile' }, 501);
 }
