@@ -21,6 +21,8 @@ export async function onRequestPost({ request, env }) {
   if (event.type !== 'checkout.session.completed') return ok200();
 
   const session = event.data?.object || {};
+  if (session.payment_status && session.payment_status !== 'paid') return ok200();
+
   const kvId = session.client_reference_id;
   const stored = kvId ? await env.ISCRIZIONI_KV.get(kvId) : null;
   if (!stored) return ok200(); // idempotenza: già processato o scaduto

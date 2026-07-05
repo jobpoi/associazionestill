@@ -59,6 +59,17 @@ describe('POST /api/stripe/webhook', () => {
     expect(inviaEmailIscrizione).not.toHaveBeenCalled();
   });
 
+  it('payment_status non pagato → 200 no-op, nessun invio, KV intatto', async () => {
+    verifyStripeSignature.mockResolvedValue(true);
+    const kv = makeKv({ isc_1: JSON.stringify(value) });
+    const env = { ISCRIZIONI_KV: kv, STRIPE_WEBHOOK_SECRET: 's' };
+    const evt = { type: 'checkout.session.completed', data: { object: { client_reference_id: 'isc_1', payment_status: 'unpaid' } } };
+    const res = await onRequestPost({ request: makeReq(evt), env });
+    expect(res.status).toBe(200);
+    expect(inviaEmailIscrizione).not.toHaveBeenCalled();
+    expect(kv.store.size).toBe(1);
+  });
+
   it('altro tipo evento → 200 senza azione', async () => {
     verifyStripeSignature.mockResolvedValue(true);
     const kv = makeKv({ isc_1: JSON.stringify(value) });
