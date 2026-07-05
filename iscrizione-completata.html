@@ -211,6 +211,9 @@
         <p><strong>IBAN:</strong><br><span class="iban">IT82 C062 3005 0720 0003 6140 126</span></p>
         <p><strong>Causale:</strong> Iscrizione 2026 — Nome Cognome</p>
         <p>Hai ricevuto via email una copia del modulo compilato.</p>`;
+    } else if (metodo === 'stripe') {
+      box.innerHTML = `<p>Pagamento con carta ricevuto. Grazie!</p>
+        <p>Ti abbiamo inviato via email una copia del modulo compilato. La tua iscrizione sarà registrata a breve.</p>`;
     } else {
       box.innerHTML = `<p>Pagamento ricevuto. Ti abbiamo inviato via email la copia del modulo compilato.</p>`;
     }

@@ -454,7 +454,6 @@
               <input type="radio" name="metodoPagamento" value="stripe" required>
               Carta di credito (Stripe)
             </label>
-            <div class="payment-note">Disponibile a breve.</div>
           </div>
 
           <div class="payment-option">
@@ -533,6 +532,12 @@
 
     const form = document.getElementById('form-iscrizione');
     const esito = document.getElementById('esito');
+
+    if (new URLSearchParams(location.search).get('annullato') === '1') {
+      esito.style.display = 'block';
+      esito.textContent = 'Pagamento annullato. Puoi riprovare o scegliere un altro metodo.';
+    }
+
     const radiosSocio = form.querySelectorAll('input[name="tipologiaSocio"]');
     const sezGenitore = document.getElementById('sezione-genitore');
 
@@ -607,6 +612,7 @@
           esito.appendChild(lista);
           return;
         }
+        if (json.url) { window.location.href = json.url; return; }
         if (json.metodo === 'bonifico') {
           window.location.href = '/iscrizione-completata?metodo=bonifico';
         }
