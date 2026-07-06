@@ -5,4 +5,4 @@ compatibility_flags = ["nodejs_compat"]
 
 [[kv_namespaces]]
 binding = "ISCRIZIONI_KV"
-id = "PLACEHOLDER_DA_CREARE_IN_CLOUDFLARE"
+id = "64c2c87af4384d2fb7b41d9def32fb2e"
