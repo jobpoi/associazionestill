@@ -1,0 +1,26 @@
+# File/cartelle da NON servire come asset statici pubblici su Cloudflare.
+# (worker.js e functions/ vengono comunque compilati nel Worker perché
+#  importati da worker.js; qui li escludiamo solo dall'upload come asset.)
+
+# Codice server e dipendenze
+node_modules
+functions
+worker.js
+
+# Config e strumenti (non devono essere pubblici)
+wrangler.toml
+vitest.config.js
+package.json
+package-lock.json
+.assetsignore
+.gitignore
+*.test.js
+*.mjs
+
+# Documentazione e materiale interno
+docs
+CLAUDE.md
+*.md
+temporary screenshots
+.git
+.superpowers

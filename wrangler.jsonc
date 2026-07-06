@@ -1,14 +1,32 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "associazionestill",
+  "main": "worker.js",
   "compatibility_date": "2026-05-23",
+  "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true
   },
+  // Modello "Worker + Static Assets": gli asset statici vengono serviti da
+  // Cloudflare; le richieste che non corrispondono a un file arrivano a
+  // worker.js, che instrada /api/* alle Function.
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash"
   },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  "kv_namespaces": [
+    {
+      "binding": "ISCRIZIONI_KV",
+      "id": "64c2c87af4384d2fb7b41d9def32fb2e"
+    }
+  ],
+  // Variabili in chiaro (non sensibili). Vanno nel config perché `wrangler
+  // deploy` sovrascrive le vars con quelle qui presenti: se le lasciassimo solo
+  // nel pannello, verrebbero cancellate al deploy e l'invio email si romperebbe.
+  // I SEGRETI (RESEND_API_KEY, STRIPE_*) restano nel pannello e non si toccano.
+  "vars": {
+    "ASSOCIATION_EMAIL": "info@associazionestill.it",
+    "MAIL_FROM": "Associazione Italiana Malattia di Still <noreply@associazionestill.it>"
+  }
 }

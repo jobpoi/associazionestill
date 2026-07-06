@@ -13,6 +13,18 @@ function newId() {
 }
 
 export async function onRequestPost({ request, env }) {
+  try {
+    return await handle({ request, env });
+  } catch (e) {
+    // Rete di sicurezza: qualunque eccezione non gestita deve comunque
+    // produrre una risposta JSON. Se lasciassimo propagare l'errore,
+    // Cloudflare risponderebbe con una pagina HTML e il client mostrerebbe
+    // il fuorviante "Errore di rete. Riprova.".
+    return json({ ok: false, errors: ['Errore imprevisto del server: ' + (e?.message || String(e))] }, 500);
+  }
+}
+
+async function handle({ request, env }) {
   let data;
   try {
     data = await request.json();
@@ -27,9 +39,18 @@ export async function onRequestPost({ request, env }) {
   const { ok, errors, value } = validateIscrizione(data);
   if (!ok) return json({ ok: false, errors }, 400);
 
+  if (!env.ISCRIZIONI_KV || typeof env.ISCRIZIONI_KV.put !== 'function') {
+    // Binding KV non collegato al progetto Pages: causa tipica di errore in produzione.
+    return json({ ok: false, errors: ['Configurazione server incompleta (storage non disponibile). Contatta l\'Associazione.'] }, 500);
+  }
+
   const id = newId();
   // Storage transitorio: TTL 24h; cancellato dopo l'invio (o dal webhook Stripe).
-  await env.ISCRIZIONI_KV.put(id, JSON.stringify(value), { expirationTtl: 86400 });
+  try {
+    await env.ISCRIZIONI_KV.put(id, JSON.stringify(value), { expirationTtl: 86400 });
+  } catch (e) {
+    return json({ ok: false, errors: ['Errore nel salvataggio temporaneo: ' + e.message] }, 500);
+  }
 
   if (value.metodoPagamento === 'bonifico') {
     try {

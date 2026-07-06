@@ -583,7 +583,15 @@
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(raccogliDati()),
         });
-        const json = await res.json();
+        let json;
+        try {
+          json = await res.json();
+        } catch {
+          // La risposta non è JSON (es. pagina di errore del server): mostra
+          // un messaggio utile col codice, non il generico "Errore di rete".
+          esito.textContent = 'Il server ha risposto con un errore (codice ' + res.status + '). Riprova più tardi o contatta info@associazionestill.it.';
+          return;
+        }
         if (res.status === 501) {
           esito.textContent = 'Il pagamento online sarà disponibile a breve. Per ora seleziona "Bonifico".';
           return;
@@ -609,7 +617,7 @@
           window.location.href = '/iscrizione-completata?metodo=bonifico';
         }
       } catch (err) {
-        esito.textContent = 'Errore di rete. Riprova.';
+        esito.textContent = 'Impossibile contattare il server. Controlla la connessione e riprova.';
       }
     });
   </script>

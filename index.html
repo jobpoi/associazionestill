@@ -1146,6 +1146,9 @@
             <div id="newsletter-success" style="display:none;padding:10px 14px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;color:#166534;font-size:0.85rem;">
               ✓ Iscrizione completata! Grazie.
             </div>
+            <div id="newsletter-error" style="display:none;padding:10px 14px;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;color:#991b1b;font-size:0.85rem;">
+              Iscrizione non riuscita. Riprova più tardi.
+            </div>
           </form>
         </div>
 
@@ -1660,6 +1663,9 @@
             <div id="form-success" style="display:none;padding:14px 18px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;color:#166534;font-size:0.9rem;">
               ✓ Messaggio inviato con successo. Ti risponderemo al più presto!
             </div>
+            <div id="form-error" style="display:none;padding:14px 18px;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;color:#991b1b;font-size:0.9rem;">
+              Non è stato possibile inviare il messaggio. Riprova o scrivici a info@associazionestill.it.
+            </div>
           </form>
 
         </div>
@@ -1863,12 +1869,22 @@
     if (formContatti) {
       formContatti.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const data = new FormData(formContatti);
-        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
-        const json = await res.json();
-        if (json.success) {
-          document.getElementById('form-success').style.display = 'block';
-          formContatti.reset();
+        const okBox = document.getElementById('form-success');
+        const errBox = document.getElementById('form-error');
+        okBox.style.display = 'none';
+        errBox.style.display = 'none';
+        try {
+          const data = new FormData(formContatti);
+          const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+          const json = await res.json().catch(() => ({}));
+          if (res.ok && json.success) {
+            okBox.style.display = 'block';
+            formContatti.reset();
+          } else {
+            errBox.style.display = 'block';
+          }
+        } catch {
+          errBox.style.display = 'block';
         }
       });
     }
@@ -1878,12 +1894,22 @@
     if (formNewsletter) {
       formNewsletter.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const data = new FormData(formNewsletter);
-        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
-        const json = await res.json();
-        if (json.success) {
-          document.getElementById('newsletter-success').style.display = 'block';
-          formNewsletter.reset();
+        const okBox = document.getElementById('newsletter-success');
+        const errBox = document.getElementById('newsletter-error');
+        okBox.style.display = 'none';
+        errBox.style.display = 'none';
+        try {
+          const data = new FormData(formNewsletter);
+          const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+          const json = await res.json().catch(() => ({}));
+          if (res.ok && json.success) {
+            okBox.style.display = 'block';
+            formNewsletter.reset();
+          } else {
+            errBox.style.display = 'block';
+          }
+        } catch {
+          errBox.style.display = 'block';
         }
       });
     }
