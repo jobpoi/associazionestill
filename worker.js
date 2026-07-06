@@ -7,14 +7,11 @@
 import { onRequestPost as submitPost } from './functions/api/iscrizione/submit.js';
 import { onRequestPost as stripeWebhookPost } from './functions/api/stripe/webhook.js';
 import { onRequestGet as paypalCaptureGet } from './functions/api/paypal/capture.js';
-import { onRequestGet as diagGet } from './functions/api/diag.js';
 
 const ROUTES = [
   { method: 'POST', path: '/api/iscrizione/submit', handler: submitPost },
   { method: 'POST', path: '/api/stripe/webhook', handler: stripeWebhookPost },
   { method: 'GET', path: '/api/paypal/capture', handler: paypalCaptureGet },
-  // TEMPORANEO: diagnostica RESEND_API_KEY — rimuovere dopo la risoluzione.
-  { method: 'GET', path: '/api/diag', handler: diagGet },
 ];
 
 const jsonError = (obj, status) =>
