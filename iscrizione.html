@@ -449,16 +449,19 @@
         <fieldset>
           <legend>Metodo di pagamento</legend>
 
+          <!-- Opzione "Carta di credito (Stripe)" temporaneamente nascosta: account Stripe in fase di approvazione.
+               Per ripristinare, decommentare questo blocco.
           <div class="payment-option">
             <label class="radio-row" style="margin-bottom:0;">
               <input type="radio" name="metodoPagamento" value="stripe" required>
               Carta di credito (Stripe)
             </label>
           </div>
+          -->
 
           <div class="payment-option">
             <label class="radio-row" style="margin-bottom:0;">
-              <input type="radio" name="metodoPagamento" value="bonifico" required>
+              <input type="radio" name="metodoPagamento" value="bonifico" required checked>
               Bonifico bancario
             </label>
           </div>
