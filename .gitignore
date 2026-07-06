@@ -22,3 +22,6 @@ add-logo*.mjs
 # Script di verifica/riproduzione usa-e-getta
 verify*.mjs
 repro*.mjs
+
+# Scratch del workflow subagent-driven (brief, report, diff)
+.superpowers/
