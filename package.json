@@ -12,16 +12,8 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "comment": "Solo pdf-lib e' dipendenza runtime (usata dalle Cloudflare Functions). Gli strumenti di sviluppo (vitest, wrangler, sharp, puppeteer, qrcode, jsqr, pngjs) NON sono qui per evitare che i loro binari per-piattaforma rompano `npm ci` su Cloudflare (Linux). In locale: npm install -D vitest wrangler sharp puppeteer qrcode jsqr pngjs",
   "dependencies": {
     "pdf-lib": "^1.17.1"
-  },
-  "devDependencies": {
-    "jsqr": "^1.4.0",
-    "pngjs": "^7.0.0",
-    "puppeteer": "^24.39.1",
-    "qrcode": "^1.5.4",
-    "sharp": "^0.35.2",
-    "vitest": "^4.1.9",
-    "wrangler": "^4.107.0"
   }
 }
