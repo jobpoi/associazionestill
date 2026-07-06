@@ -80,17 +80,6 @@
     }
     .back-form:hover { text-decoration: underline; }
 
-    .draft-banner {
-      background: var(--pale-light);
-      border: 1.5px dashed var(--salmon);
-      border-radius: 10px;
-      padding: 14px 20px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--red-dark);
-      margin-bottom: 28px;
-    }
-
     .card {
       background: #fff;
       border-radius: 16px;
@@ -124,6 +113,36 @@
       font-size: 0.95rem;
       color: var(--dark);
       line-height: 1.75;
+    }
+    .policy-section p + p { margin-top: 12px; }
+    .policy-section .lead {
+      font-size: 1rem;
+      color: var(--gray);
+      margin-bottom: 26px;
+    }
+
+    .policy-list {
+      list-style: none;
+      counter-reset: item;
+      margin: 12px 0 4px;
+      padding: 0;
+    }
+    .policy-list li {
+      font-size: 0.95rem;
+      color: var(--dark);
+      line-height: 1.75;
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 9px;
+    }
+    .policy-list li:last-child { margin-bottom: 0; }
+    .policy-list li::before {
+      content: counter(item, lower-alpha) ")";
+      counter-increment: item;
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--red);
     }
 
     .updated-note {
@@ -159,49 +178,57 @@
 
     <a href="/iscrizione" class="back-form">&larr; Torna al modulo</a>
 
-    <div class="draft-banner">
-      Bozza da validare — testo provvisorio in attesa di verifica legale.
-    </div>
-
     <div class="card">
-      <h2>Informativa sul trattamento dei dati personali (art. 13 Reg. UE 2016/679 - GDPR)</h2>
+      <h2>Informativa ex art. 13 GDPR per soci e aspiranti soci e consenso al trattamento</h2>
+
+      <p class="lead">Caro socio/a o aspirante socio/a, ai sensi degli art. 13 e 14 del Regolamento UE 2016/679 in materia di protezione dei dati personali ("GDPR") ti informiamo di quanto segue.</p>
 
       <div class="policy-section">
-        <h3>1. Titolare del trattamento</h3>
-        <p>Il Titolare del trattamento è l'Associazione Italiana Malattia di Still ODV (C.F. 96658340581), con sede in [indirizzo sede legale]. Email: info@associazionestill.it - PEC: associazionestill@pec.it. [Eventuale Responsabile della Protezione dei Dati (DPO) e relativi contatti, se nominato].</p>
+        <h3>Finalità del trattamento e base giuridica</h3>
+        <p>L'Associazione tratta i tuoi dati personali esclusivamente per lo svolgimento dell'attività istituzionale ed in particolare:</p>
+        <ol class="policy-list">
+          <li>per la gestione del rapporto associativo (invio della corrispondenza, convocazione alle sedute degli organi, procedure amministrative interne) e per l'organizzazione ed esecuzione del servizio;</li>
+          <li>per adempiere agli obblighi di legge (es. fiscali, assicurativi, ecc.) riferiti ai soci dell'Associazione;</li>
+          <li>per l'invio (tramite posta, posta elettronica, newsletter o numero di cellulare o altri mezzi informatici) di comunicazioni legate all'attività e iniziative dell'Associazione;</li>
+          <li><em>in relazione alle immagini/video, per la pubblicazione nel sito dell'Associazione, sui social network dell'Associazione o su newsletter o su materiale cartaceo di promozione delle attività istituzionali dell'Associazione previo Tuo esplicito consenso;</em></li>
+          <li><em>in relazione alla foto personale, per l'inserimento nel tesserino di riconoscimento;</em></li>
+          <li>per la partecipazione dei soci a corsi, incontri e iniziative e per l'organizzazione e gestione dei corsi;</li>
+          <li>per analisi statistiche, anche in forma aggregata.</li>
+        </ol>
+        <p>La base giuridica del trattamento è rappresentata dalla richiesta di adesione e dal contratto associativo (art. 6 comma 1 lett. b GDPR), dal consenso al trattamento (art. 6 comma 1 lett. a – art. 9 comma 2 lett. a GDPR), dai contatti regolari con l'Associazione (art. 9 comma 2 lett. d GDPR), dagli obblighi legali a cui è tenuta l'Associazione (art. 6 comma 1 lett. c GDPR).</p>
       </div>
 
       <div class="policy-section">
-        <h3>2. Tipologie di dati trattati</h3>
-        <p>Trattiamo: dati anagrafici e identificativi (nome, cognome, luogo e data di nascita, codice fiscale), dati di contatto (indirizzo, email, telefono) e, per i soci minorenni, i dati del genitore/tutore. La categoria di appartenenza selezionata (es. "Paziente adulto", "Paziente pediatrico") può rivelare <strong>dati relativi alla salute</strong>, che costituiscono categoria particolare di dati ai sensi dell'art. 9 GDPR.</p>
+        <h3>Modalità e principi del trattamento</h3>
+        <p>Il trattamento avverrà nel rispetto del GDPR e del D.Lgs. n. 196/03 ("Codice in materia di protezione dei dati personali"), nonché dei principi di liceità, correttezza e trasparenza, adeguatezza e pertinenza, con modalità cartacee ed informatiche, ad opera di persone autorizzate dall'Associazione e con l'adozione di misure adeguate di protezione, in modo da garantire la sicurezza e la riservatezza dei dati. <em>Non verrà svolto alcun processo decisionale automatizzato.</em></p>
       </div>
 
       <div class="policy-section">
-        <h3>3. Finalità e base giuridica</h3>
-        <p>I dati sono trattati per: (a) gestione della richiesta di iscrizione e del rapporto associativo (base giuridica: esecuzione di misure precontrattuali e contrattuali, art. 6.1.b); (b) adempimenti relativi alla copertura assicurativa obbligatoria dei soci; (c) invio di comunicazioni dell'Associazione, solo previo consenso (art. 6.1.a). Il trattamento dei dati relativi alla salute avviene sulla base del <strong>consenso esplicito</strong> dell'interessato (art. 9.2.a).</p>
+        <h3>Necessità del conferimento</h3>
+        <p>Il conferimento dei dati anagrafici e di contatto è necessario in quanto strettamente legato alla gestione del rapporto associativo. <em>Il consenso all'utilizzo delle immagini/video e alla diffusione dei dati nel sito istituzionale e nelle altre modalità sopra descritte è facoltativo.</em></p>
       </div>
 
       <div class="policy-section">
-        <h3>4. Modalità e conservazione</h3>
-        <p>I dati sono trattati con strumenti elettronici e cartacei, con misure di sicurezza adeguate. I dati sono conservati per la durata del rapporto associativo e successivamente per [tempi di conservazione da definire, es. termini di legge fiscali/assicurativi]. I dati del modulo online in attesa di pagamento sono conservati temporaneamente ed eliminati dopo l'invio della conferma.</p>
+        <h3>Comunicazione dei dati e trasferimento all'estero dei dati</h3>
+        <p><em>I dati potranno essere comunicati agli altri soci ai fini dell'organizzazione ed esecuzione del servizio.</em> I dati potranno essere comunicati ai soggetti deputati allo svolgimento di attività a cui l'Associazione è tenuta in base ad obbligo di legge (commercialista, assicuratore, sistemista, ecc.) e a tutte quelle persone fisiche e/o giuridiche, pubbliche e/o private quando la comunicazione risulti necessaria o funzionale allo svolgimento dell'attività istituzionale (formatori, Enti Locali, ditte che curano la manutenzione informatica, società organizzatrici dei corsi, ecc.). I dati potranno essere trasferiti a destinatari con sede extra UE che hanno sottoscritto accordi diretti ad assicurare un livello di protezione adeguato dei dati personali, o comunque previa verifica che il destinatario garantisca adeguate misure di protezione. Ove necessario o opportuno, i soggetti cui vengono trasmessi i dati per lo svolgimento di attività per conto dell'Associazione saranno nominati Responsabili (esterni) del trattamento ai sensi dell'art. 28 GDPR.</p>
       </div>
 
       <div class="policy-section">
-        <h3>5. Destinatari dei dati</h3>
-        <p>I dati possono essere comunicati a: la compagnia assicurativa per la copertura dei soci; i fornitori tecnici che agiscono come responsabili del trattamento, tra cui Cloudflare, Inc. (hosting del sito), Resend (invio delle email) e Stripe / PayPal (gestione dei pagamenti). Alcuni di questi fornitori possono trattare i dati anche al di fuori dell'UE, con adeguate garanzie previste dagli artt. 44 e ss. GDPR.</p>
+        <h3>Periodo di conservazione dei dati</h3>
+        <p>I dati saranno utilizzati dall'Associazione fino alla cessazione del rapporto associativo. Dopo tale data, saranno conservati per finalità di archivio, obblighi legali o contabili o fiscali o per esigenze di tutela dell'Associazione, con esclusione di comunicazioni a terzi e diffusione in ogni caso applicando i principi di proporzionalità e minimizzazione.</p>
       </div>
 
       <div class="policy-section">
-        <h3>6. Diritti dell'interessato</h3>
-        <p>L'interessato può in ogni momento esercitare i diritti di accesso, rettifica, cancellazione, limitazione, opposizione e portabilità (artt. 15-22 GDPR), nonché revocare il consenso prestato senza pregiudicare la liceità del trattamento precedente. Le richieste vanno inviate a info@associazionestill.it. È inoltre possibile proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it).</p>
+        <h3>Diritti dell'interessato</h3>
+        <p>Nella qualità di interessato, Ti sono garantiti tutti i diritti specificati all'art. 15 - 20 GDPR, tra cui il diritto all'accesso, rettifica e cancellazione dei dati, il diritto di limitazione e opposizione al trattamento, il diritto di revocare il consenso al trattamento (senza pregiudizio per la liceità del trattamento basata sul consenso acquisito prima della revoca), nonché il diritto di proporre reclamo al Garante per la Protezione dei dati personali qualora tu ritenga che il trattamento che ti riguarda violi il GDPR o la normativa italiana. I suddetti diritti possono essere esercitati mediante comunicazione scritta da inviare a mezzo <em>posta elettronica, p.e.c.</em> o a mezzo Raccomandata presso la sede dell'Associazione.</p>
       </div>
 
       <div class="policy-section">
-        <h3>7. Conferimento dei dati</h3>
-        <p>Il conferimento dei dati contrassegnati come obbligatori è necessario per perfezionare l'iscrizione; il mancato conferimento rende impossibile l'accettazione della domanda. Il consenso alle comunicazioni è facoltativo.</p>
+        <h3>Titolare del trattamento</h3>
+        <p>Il titolare del trattamento è l'Associazione Italiana Malattia di Still con sede in Via Liberiana, 17 - Roma – tel. 351.8122.478 – mail <a href="mailto:info@associazionestill.it">info@associazionestill.it</a>.</p>
       </div>
 
-      <p class="updated-note">Ultimo aggiornamento: [data].</p>
+      <p class="updated-note">Ultimo aggiornamento: 06/07/2026.</p>
     </div>
 
   </main>
