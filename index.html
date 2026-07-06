@@ -1253,7 +1253,14 @@
       const dots   = document.querySelectorAll('.testi-dot');
       let current  = 0;
       let timer    = null;
-      const DELAY  = 6000;
+
+      // Tempo di permanenza proporzionale alla lunghezza del testo: le storie
+      // piu lunghe (es. Jacopo) restano piu a lungo, per dare tempo di leggere.
+      function readMs(n) {
+        const bq = slides[n] && slides[n].querySelector('blockquote');
+        const words = bq ? bq.textContent.trim().split(/\s+/).filter(Boolean).length : 0;
+        return Math.min(16000, Math.max(7000, words * 100 + 4000));
+      }
 
       // Calcola altezza massima per evitare salti di layout
       function setHeight() {
@@ -1282,19 +1289,19 @@
         current = n;
       }
 
-      window.goToSlide = function(n) { showSlide(n); resetTimer(); };
+      window.goToSlide = function(n) { showSlide(n); scheduleNext(); };
 
-      function next() { showSlide((current + 1) % slides.length); }
+      function next() { showSlide((current + 1) % slides.length); scheduleNext(); }
 
-      function resetTimer() {
-        clearInterval(timer);
-        timer = setInterval(next, DELAY);
+      function scheduleNext() {
+        clearTimeout(timer);
+        timer = setTimeout(next, readMs(current));
       }
 
-      window.pauseCarousel  = function() { clearInterval(timer); };
-      window.resumeCarousel = function() { resetTimer(); };
+      window.pauseCarousel  = function() { clearTimeout(timer); };
+      window.resumeCarousel = function() { scheduleNext(); };
 
-      window.addEventListener('load', function() { setHeight(); resetTimer(); });
+      window.addEventListener('load', function() { setHeight(); scheduleNext(); });
       window.addEventListener('resize', setHeight);
     })();
   </script>
