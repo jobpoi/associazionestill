@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { PDFDocument } from 'pdf-lib';
-import { generaPdfIscrizione } from './pdf.js';
+import { generaPdfIscrizione, formatData } from './pdf.js';
 
 const value = {
   tipologiaIscrizione: 'primo', tipologiaSocio: 'maggiorenne',
@@ -27,6 +27,17 @@ describe('generaPdfIscrizione', () => {
     // Garanzia strutturale: il sorgente non deve contenere la stringa riservata.
     const src = (await import('node:fs')).readFileSync('functions/_lib/pdf.js', 'utf8');
     expect(src.toUpperCase()).not.toContain('RISERVATO ALL');
+  });
+
+  it('formatData: ISO AAAA-MM-GG → GG/MM/AAAA', () => {
+    expect(formatData('2026-07-06')).toBe('06/07/2026');
+    expect(formatData('1980-05-10')).toBe('10/05/1980');
+  });
+  it('formatData: valori non standard restano gestiti', () => {
+    expect(formatData('')).toBe('');
+    expect(formatData(undefined)).toBe('');
+    expect(formatData(null)).toBe('');
+    expect(formatData('06/07/2026')).toBe('06/07/2026'); // già formattata → invariata
   });
 
   it('gestisce il socio minorenne senza errori', async () => {

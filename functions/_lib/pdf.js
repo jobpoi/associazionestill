@@ -15,6 +15,14 @@ function b64ToBytes(b64) {
 
 function chk(v) { return v ? '[X] ' : '[ ] '; }
 
+// Converte una data ISO "AAAA-MM-GG" nel formato italiano "GG/MM/AAAA".
+// Lascia invariato ciò che non è nel formato atteso (o stringa vuota).
+export function formatData(iso) {
+  if (typeof iso !== 'string' || iso === '') return '';
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
+}
+
 export async function generaPdfIscrizione(value, pagamento) {
   const doc = await PDFDocument.create();
   const font = await doc.embedFont(StandardFonts.Helvetica);
@@ -54,7 +62,7 @@ export async function generaPdfIscrizione(value, pagamento) {
   line('1) DATI DEL SOCIO', { f: bold });
   const s = value.socio;
   line(`Nome: ${s.nome}    Cognome: ${s.cognome}`);
-  line(`Luogo di nascita: ${s.luogoNascita}    Data di nascita: ${s.dataNascita}`);
+  line(`Luogo di nascita: ${s.luogoNascita}    Data di nascita: ${formatData(s.dataNascita)}`);
   line(`Codice fiscale: ${s.codiceFiscale}`);
   line(`Indirizzo: ${s.indirizzo}  CAP: ${s.cap}  Comune: ${s.comune}  Prov: ${s.provincia}`);
   line(`Telefono: ${s.telefono}    E-mail: ${s.email}`);
@@ -79,7 +87,7 @@ export async function generaPdfIscrizione(value, pagamento) {
     const g = value.genitore;
     line('3) DATI DEL GENITORE / TUTORE LEGALE', { f: bold });
     line(`Nome: ${g.nome}    Cognome: ${g.cognome}`);
-    line(`Luogo di nascita: ${g.luogoNascita}    Data di nascita: ${g.dataNascita}`);
+    line(`Luogo di nascita: ${g.luogoNascita}    Data di nascita: ${formatData(g.dataNascita)}`);
     line(`Codice fiscale: ${g.codiceFiscale}`);
     line(`Telefono: ${g.telefono}    E-mail: ${g.email}`);
     line(`In qualità di: ${g.qualita}`);
@@ -119,8 +127,8 @@ export async function generaPdfIscrizione(value, pagamento) {
   const firmatario = value.tipologiaSocio === 'minorenne' && value.genitore
     ? `${value.genitore.nome} ${value.genitore.cognome}`
     : `${value.socio.nome} ${value.socio.cognome}`;
-  line(`Luogo: ${value.luogo}    Data: ${value.dataFirma}`);
-  line(`Firma: ${firmatario} (consenso elettronico prestato online il ${value.dataFirma})`, { f: bold });
+  line(`Luogo: ${value.luogo}    Data: ${formatData(value.dataFirma)}`);
+  line(`Firma: ${firmatario} (consenso elettronico prestato online il ${formatData(value.dataFirma)})`, { f: bold });
 
   return await doc.save();
 }
