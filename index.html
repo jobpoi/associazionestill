@@ -129,19 +129,20 @@
     }
     .btn-nav:active { transform: translateY(0) !important; }
     .btn-nav-outline {
-      background: transparent;
+      background: var(--pale);
       color: var(--red) !important;
       padding: 9px 22px;
       border-radius: 4px;
-      border: 1.5px solid var(--red);
+      border: 1.5px solid var(--pale);
       font-size: 14px !important;
       font-weight: 600 !important;
       letter-spacing: 0.02em;
-      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
     }
     .btn-nav-outline::after { display: none !important; }
     .btn-nav-outline:hover {
       background: var(--red) !important;
+      border-color: var(--red) !important;
       color: #fff !important;
       transform: translateY(-1px);
       box-shadow: 0 4px 18px rgba(192,57,43,0.28) !important;
@@ -639,13 +640,13 @@
     .mobile-nav .btn-nav-m:hover { background: var(--red-dark); color: #fff; }
     .mobile-nav .btn-nav-m-outline {
       margin-top: 8px;
-      background: transparent;
+      background: var(--pale);
       color: var(--red);
-      border: 1.5px solid var(--red);
+      border: 1.5px solid var(--pale);
       text-align: center;
       font-weight: 600;
     }
-    .mobile-nav .btn-nav-m-outline:hover { background: var(--red); color: #fff; }
+    .mobile-nav .btn-nav-m-outline:hover { background: var(--red); border-color: var(--red); color: #fff; }
 
     /* ══ RESPONSIVE ══════════════════════════════════════════════════════ */
 
@@ -1097,7 +1098,7 @@
         </p>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;" class="comunita-grid">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,360px));gap:28px;justify-content:center;" class="comunita-grid">
 
         <!-- WhatsApp -->
         <div class="service-card fade-up d1" style="text-align:center;padding:40px 32px;">
