@@ -686,7 +686,7 @@
       .supporto-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
       .supporto-sticky { position: static !important; top: auto !important; }
       .services-grid { grid-template-columns: 1fr 1fr !important; }
-      .news-grid { grid-template-columns: 1fr 1fr !important; }
+      .news-grid { grid-auto-columns: calc(50% - 32px) !important; }
       .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
       .section-inner { padding: 0 24px !important; }
       #malattia, #missione, #supporto, #notizie, #contatti { padding: 72px 0 !important; }
@@ -700,7 +700,7 @@
       .hero-stats { flex-wrap: wrap !important; }
       .hero-stat { flex: 1 1 auto !important; min-width: 130px; padding: 14px 18px !important; }
       .services-grid { grid-template-columns: 1fr !important; }
-      .news-grid { grid-template-columns: 1fr !important; }
+      .news-grid { grid-auto-columns: 82% !important; }
       .footer-grid { grid-template-columns: 1fr !important; }
       .section-inner { padding: 0 16px !important; }
       #malattia, #missione, #supporto, #notizie, #contatti { padding: 56px 0 !important; }
@@ -1394,6 +1394,34 @@
   </script>
 
   <!-- ════════════════════════════ NOTIZIE ════════════════════════════ -->
+  <style>
+    /* Riga unica a scorrimento orizzontale: 4 card visibili + spiraglio della successiva */
+    #news-grid {
+      display:grid;
+      grid-auto-flow:column;
+      grid-auto-columns:calc(25% - 36px);
+      gap:24px;
+      overflow-x:auto;
+      scroll-snap-type:x proximity;
+      padding-bottom:16px;
+      scrollbar-width:thin;
+      scrollbar-color:#F2B5A8 transparent;
+    }
+    #news-grid > * { scroll-snap-align:start; }
+    #news-grid::-webkit-scrollbar { height:8px; }
+    #news-grid::-webkit-scrollbar-track { background:rgba(250,217,212,0.35); border-radius:4px; }
+    #news-grid::-webkit-scrollbar-thumb { background:#F2B5A8; border-radius:4px; }
+    #news-grid::-webkit-scrollbar-thumb:hover { background:#E8867A; }
+    .news-nav-btn {
+      width:40px; height:40px; border-radius:50%; border:1.5px solid var(--pale);
+      background:#fff; color:var(--red); cursor:pointer; flex-shrink:0;
+      display:inline-flex; align-items:center; justify-content:center;
+      transition:transform 0.2s, background-color 0.2s;
+    }
+    .news-nav-btn:hover { background:var(--pale-light,#fdf0ee); }
+    .news-nav-btn:active { transform:scale(0.92); }
+    .news-nav-btn:focus-visible { outline:2px solid var(--red); outline-offset:2px; }
+  </style>
   <section id="notizie" style="padding:100px 0;background:#fff;">
     <div class="section-inner">
 
@@ -1404,15 +1432,30 @@
             Ultime <span style="color:var(--red);">notizie</span>
           </h2>
         </div>
-        <a href="#" class="link-arrow fade-up d2" style="flex-shrink:0;">
-          Vedi tutte
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <div class="fade-up d2" style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <button type="button" id="news-prev" class="news-nav-btn" aria-label="Scorri le notizie indietro">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" id="news-next" class="news-nav-btn" aria-label="Scorri le notizie avanti">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </div>
 
-      <div class="news-grid" id="news-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;"></div>
+      <div class="news-grid" id="news-grid"></div>
     </div>
   </section>
+  <script>
+    (function(){
+      const grid = document.getElementById('news-grid');
+      const step = () => {
+        const c = grid.firstElementChild;
+        return c ? c.getBoundingClientRect().width + 24 : 320;
+      };
+      document.getElementById('news-prev').addEventListener('click', () => grid.scrollBy({ left: -step(), behavior: 'smooth' }));
+      document.getElementById('news-next').addEventListener('click', () => grid.scrollBy({ left: step(), behavior: 'smooth' }));
+    })();
+  </script>
 
   <!-- ════════════════════════════ TRIALS CLINICI ════════════════════════════ -->
   <section id="trials" style="padding:100px 0;" class="section-pale">
