@@ -1395,7 +1395,8 @@
 
   <!-- ════════════════════════════ NOTIZIE ════════════════════════════ -->
   <style>
-    /* Riga unica a scorrimento orizzontale: 4 card visibili + spiraglio della successiva */
+    /* Riga unica a scorrimento orizzontale: 4 card visibili + spiraglio della successiva.
+       Avanza in automatico (come il carosello delle storie); scrollbar nascosta. */
     #news-grid {
       display:grid;
       grid-auto-flow:column;
@@ -1404,14 +1405,10 @@
       overflow-x:auto;
       scroll-snap-type:x proximity;
       padding-bottom:16px;
-      scrollbar-width:thin;
-      scrollbar-color:#F2B5A8 transparent;
+      scrollbar-width:none;
     }
     #news-grid > * { scroll-snap-align:start; }
-    #news-grid::-webkit-scrollbar { height:8px; }
-    #news-grid::-webkit-scrollbar-track { background:rgba(250,217,212,0.35); border-radius:4px; }
-    #news-grid::-webkit-scrollbar-thumb { background:#F2B5A8; border-radius:4px; }
-    #news-grid::-webkit-scrollbar-thumb:hover { background:#E8867A; }
+    #news-grid::-webkit-scrollbar { display:none; }
     .news-nav-btn {
       width:40px; height:40px; border-radius:50%; border:1.5px solid var(--pale);
       background:#fff; color:var(--red); cursor:pointer; flex-shrink:0;
@@ -1448,12 +1445,38 @@
   <script>
     (function(){
       const grid = document.getElementById('news-grid');
+      const DELAY = 6000; // come il carosello delle storie
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let timer = null;
+
       const step = () => {
         const c = grid.firstElementChild;
         return c ? c.getBoundingClientRect().width + 24 : 320;
       };
-      document.getElementById('news-prev').addEventListener('click', () => grid.scrollBy({ left: -step(), behavior: 'smooth' }));
-      document.getElementById('news-next').addEventListener('click', () => grid.scrollBy({ left: step(), behavior: 'smooth' }));
+      const atEnd = () => grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 10;
+
+      // Avanza di una card; a fine corsa riparte dall'inizio.
+      function advance() {
+        if (atEnd()) grid.scrollTo({ left: 0, behavior: 'smooth' });
+        else grid.scrollBy({ left: step(), behavior: 'smooth' });
+      }
+      function start() {
+        if (reduced) return; // rispetta prefers-reduced-motion
+        clearInterval(timer);
+        timer = setInterval(advance, DELAY);
+      }
+      function stop() { clearInterval(timer); }
+
+      document.getElementById('news-prev').addEventListener('click', () => { grid.scrollBy({ left: -step(), behavior: 'smooth' }); start(); });
+      document.getElementById('news-next').addEventListener('click', () => { grid.scrollBy({ left: step(), behavior: 'smooth' }); start(); });
+
+      // Pausa quando l'utente interagisce (come pauseCarousel/resumeCarousel delle storie).
+      grid.addEventListener('mouseenter', stop);
+      grid.addEventListener('mouseleave', start);
+      grid.addEventListener('touchstart', stop, { passive: true });
+      grid.addEventListener('touchend', start, { passive: true });
+
+      window.addEventListener('load', start);
     })();
   </script>
 
