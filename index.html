@@ -1340,7 +1340,9 @@
   <!-- ════════════════════════════ NOTIZIE ════════════════════════════ -->
   <style>
     /* Riga unica a scorrimento orizzontale: 4 card visibili + spiraglio della successiva.
-       Avanza in automatico (come il carosello delle storie); scrollbar nascosta. */
+       Avanza in automatico (come il carosello delle storie); scrollbar nascosta.
+       Con 4 o meno notizie (classe .news-grid--fit, gestita via JS) le card
+       riempiono esattamente la riga: niente spiraglio ne' spazio vuoto. */
     #news-grid {
       display:grid;
       grid-auto-flow:column;
@@ -1351,6 +1353,7 @@
       padding-bottom:16px;
       scrollbar-width:none;
     }
+    #news-grid.news-grid--fit { grid-auto-columns:calc((100% - 72px) / 4); }
     #news-grid > * { scroll-snap-align:start; }
     #news-grid::-webkit-scrollbar { display:none; }
     .news-nav-btn {
@@ -1398,9 +1401,22 @@
         return c ? c.getBoundingClientRect().width + 24 : 320;
       };
       const atEnd = () => grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 10;
+      const hasOverflow = () => grid.scrollWidth > grid.clientWidth + 4;
+
+      // Con 4 o meno card la riga si riempie esattamente (nessuno spiraglio)
+      // e le frecce spariscono; dalla 5a in poi torna lo scorrimento.
+      function updateLayout() {
+        grid.classList.toggle('news-grid--fit', grid.children.length <= 4);
+        const show = hasOverflow() ? '' : 'none';
+        document.getElementById('news-prev').style.display = show;
+        document.getElementById('news-next').style.display = show;
+      }
+      new MutationObserver(updateLayout).observe(grid, { childList: true });
+      window.addEventListener('resize', updateLayout);
 
       // Avanza di una card; a fine corsa riparte dall'inizio.
       function advance() {
+        if (!hasOverflow()) return;
         if (atEnd()) grid.scrollTo({ left: 0, behavior: 'smooth' });
         else grid.scrollBy({ left: step(), behavior: 'smooth' });
       }
@@ -1420,7 +1436,7 @@
       grid.addEventListener('touchstart', stop, { passive: true });
       grid.addEventListener('touchend', start, { passive: true });
 
-      window.addEventListener('load', start);
+      window.addEventListener('load', () => { updateLayout(); start(); });
     })();
   </script>
 
